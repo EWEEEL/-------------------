@@ -30,6 +30,10 @@ public sealed class MainWindowXamlTests
         StringAssert.Contains(text, "Быстрые категории");
         StringAssert.Contains(text, "Паста с томатами и базиликом");
         StringAssert.Contains(text, "WindowChrome");
+        StringAssert.Contains(text, "ThemeToggleButton");
+        StringAssert.Contains(text, "CategoryComboBoxStyle");
+        StringAssert.Contains(text, "ThemeToggleButton_Click");
+        StringAssert.Contains(text, "SearchButton_Click");
     }
 
     [TestMethod]
