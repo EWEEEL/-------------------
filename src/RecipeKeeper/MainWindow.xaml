@@ -133,12 +133,12 @@
         </Style>
 
         <Style x:Key="PrimaryButtonStyle" TargetType="Button">
-            <Setter Property="MinWidth" Value="158" />
-            <Setter Property="Height" Value="42" />
-            <Setter Property="Padding" Value="16,0" />
+            <Setter Property="MinWidth" Value="164" />
+            <Setter Property="Height" Value="44" />
+            <Setter Property="Padding" Value="18,0" />
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Foreground" Value="White" />
-            <Setter Property="Background" Value="#2F6F57" />
+            <Setter Property="Background" Value="#1F2937" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="FontSize" Value="14" />
             <Setter Property="FontWeight" Value="SemiBold" />
@@ -160,10 +160,10 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ButtonBorder" Property="Background" Value="#275D49" />
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#111827" />
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="ButtonBorder" Property="Background" Value="#1F4D3C" />
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#0B1220" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -218,6 +218,118 @@
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="ButtonBorder" Property="Background" Value="#E7EEE8" />
                                 <Setter Property="Foreground" Value="#20352D" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CategoryComboBoxItemStyle" TargetType="ComboBoxItem">
+            <Setter Property="MinHeight" Value="34" />
+            <Setter Property="Padding" Value="12,0" />
+            <Setter Property="Foreground" Value="#40524A" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBoxItem">
+                        <Border x:Name="ItemBorder"
+                                Background="Transparent"
+                                CornerRadius="7"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="True">
+                                <Setter TargetName="ItemBorder" Property="Background" Value="#EEF2FF" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="ItemBorder" Property="Background" Value="#E5EFE8" />
+                                <Setter Property="Foreground" Value="#2563EB" />
+                                <Setter Property="FontWeight" Value="SemiBold" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CategoryComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Height" Value="42" />
+            <Setter Property="Padding" Value="14,0" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Foreground" Value="#40524A" />
+            <Setter Property="Background" Value="#F3F6F4" />
+            <Setter Property="BorderBrush" Value="#E5ECE7" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="ItemContainerStyle" Value="{StaticResource CategoryComboBoxItemStyle}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <Border x:Name="ComboSurface"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="8">
+                                <Grid Margin="{TemplateBinding Padding}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="18" />
+                                    </Grid.ColumnDefinitions>
+                                    <ContentPresenter Content="{TemplateBinding SelectionBoxItem}"
+                                                      ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                                      ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
+                                                      VerticalAlignment="Center"
+                                                      RecognizesAccessKey="True" />
+                                    <Path Grid.Column="1"
+                                          Data="M 3 6 L 9 12 L 15 6"
+                                          Stroke="{TemplateBinding Foreground}"
+                                          StrokeThickness="1.8"
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"
+                                          StrokeLineJoin="Round"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
+                                </Grid>
+                            </Border>
+
+                            <ToggleButton Focusable="False"
+                                          Opacity="0"
+                                          ClickMode="Press"
+                                          IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" />
+
+                            <Popup x:Name="Popup"
+                                   Placement="Bottom"
+                                   AllowsTransparency="True"
+                                   Focusable="False"
+                                   IsOpen="{TemplateBinding IsDropDownOpen}"
+                                   PopupAnimation="Fade">
+                                <Border MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
+                                        Margin="0,6,0,0"
+                                        Background="White"
+                                        BorderBrush="#E2EAE4"
+                                        BorderThickness="1"
+                                        CornerRadius="8"
+                                        Padding="5"
+                                        Effect="{StaticResource SoftShadow}">
+                                    <ScrollViewer CanContentScroll="True">
+                                        <ItemsPresenter />
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ComboSurface" Property="Background" Value="#ECF2EE" />
+                                <Setter TargetName="ComboSurface" Property="BorderBrush" Value="#D4E1D8" />
+                            </Trigger>
+                            <Trigger Property="IsDropDownOpen" Value="True">
+                                <Setter TargetName="ComboSurface" Property="Background" Value="#EDEFF5" />
+                                <Setter TargetName="ComboSurface" Property="BorderBrush" Value="#B8D0C2" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -283,7 +395,8 @@
         </EventTrigger>
     </Window.Triggers>
 
-    <Border Background="#F7F8F4"
+    <Border x:Name="RootFrame"
+            Background="#F7F8F4"
             BorderBrush="#DDE6DF"
             BorderThickness="1">
         <Grid>
@@ -292,7 +405,8 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0"
+            <Grid x:Name="TitleBar"
+                  Grid.Row="0"
                   Background="#FBFCF8"
                   MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
                 <Grid.ColumnDefinitions>
@@ -306,7 +420,7 @@
                     <Border Width="30"
                             Height="30"
                             CornerRadius="8"
-                            Background="#2F6F57">
+                            Background="#111827">
                         <TextBlock Text="К"
                                    Foreground="White"
                                    FontSize="15"
@@ -327,6 +441,11 @@
                             Margin="0,0,10,0"
                             VerticalAlignment="Center"
                             shell:WindowChrome.IsHitTestVisibleInChrome="True">
+                    <Button x:Name="ThemeToggleButton"
+                            Style="{StaticResource TitleBarButtonStyle}"
+                            Content="☾"
+                            ToolTip="Переключить тему"
+                            Click="ThemeToggleButton_Click" />
                     <Button Style="{StaticResource TitleBarButtonStyle}"
                             Content="−"
                             Click="MinimizeButton_Click" />
@@ -339,11 +458,12 @@
                 </StackPanel>
             </Grid>
 
-            <Grid Grid.Row="1">
+            <Grid x:Name="MainArea"
+                  Grid.Row="1">
                 <Grid.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                         <GradientStop Color="#F7F8F4" Offset="0" />
-                        <GradientStop Color="#EEF4F1" Offset="0.56" />
+                        <GradientStop Color="#F1F3F6" Offset="0.56" />
                         <GradientStop Color="#FBF3EA" Offset="1" />
                     </LinearGradientBrush>
                 </Grid.Background>
@@ -377,7 +497,7 @@
                                     <Border Width="44"
                                             Height="44"
                                             CornerRadius="8"
-                                            Background="#2F6F57">
+                                            Background="#111827">
                                         <TextBlock Text="К"
                                                    Foreground="White"
                                                    FontSize="21"
@@ -405,8 +525,8 @@
                                             <ColumnDefinition Width="32" />
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
-                                        <Border Width="24" Height="24" CornerRadius="7" Background="#E8F0EA">
-                                            <TextBlock Text="⌂" Foreground="#2F6F57" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        <Border Width="24" Height="24" CornerRadius="7" Background="#EAF0FF">
+                                            <TextBlock Text="⌂" Foreground="#2563EB" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                         </Border>
                                         <TextBlock Grid.Column="1" Text="Все рецепты" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" />
                                     </Grid>
@@ -450,7 +570,7 @@
                             </StackPanel>
 
                             <Border DockPanel.Dock="Bottom"
-                                    Background="#EEF4F1"
+                                    Background="#F2F4F7"
                                     CornerRadius="8"
                                     Padding="14">
                                 <StackPanel>
@@ -500,23 +620,39 @@
                                         VerticalAlignment="Center">
                                 <Button Style="{StaticResource IconButtonStyle}"
                                         Content="⌕"
-                                        Margin="0,0,10,0" />
+                                        Margin="0,0,10,0"
+                                        ToolTip="Перейти к поиску"
+                                        Click="SearchButton_Click" />
                                 <Button Style="{StaticResource PrimaryButtonStyle}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="20" />
-                                            <ColumnDefinition Width="8" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Text="+"
-                                                   FontSize="18"
-                                                   FontWeight="SemiBold"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center" />
-                                        <TextBlock Grid.Column="2"
-                                                   Text="Новый рецепт"
-                                                   VerticalAlignment="Center" />
-                                    </Grid>
+                                    <StackPanel Orientation="Horizontal"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center">
+                                        <Border Width="18"
+                                                Height="18"
+                                                CornerRadius="6"
+                                                Background="#2563EB"
+                                                Margin="0,0,9,0">
+                                            <Grid>
+                                                <Rectangle Width="10"
+                                                           Height="2"
+                                                           RadiusX="1"
+                                                           RadiusY="1"
+                                                           Fill="White"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center" />
+                                                <Rectangle Width="2"
+                                                           Height="10"
+                                                           RadiusX="1"
+                                                           RadiusY="1"
+                                                           Fill="White"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center" />
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock Text="Новый рецепт"
+                                                   VerticalAlignment="Center"
+                                                   LineHeight="18" />
+                                    </StackPanel>
                                 </Button>
                             </StackPanel>
                         </Grid>
@@ -562,7 +698,7 @@
                                                            VerticalAlignment="Center" />
                                                 <Grid Grid.Column="1">
                                                     <TextBox x:Name="SearchTextBox"
-                                                             Foreground="#243A31"
+                                                             Foreground="#111827"
                                                              Background="Transparent"
                                                              BorderThickness="0"
                                                              FontSize="14"
@@ -588,11 +724,9 @@
                                         </Border>
 
                                         <ComboBox Grid.Column="2"
-                                                  Height="42"
+                                                  Style="{StaticResource CategoryComboBoxStyle}"
                                                   SelectedIndex="0"
-                                                  Padding="12,0"
-                                                  FontSize="14"
-                                                  Foreground="#42524B">
+                                                  VerticalAlignment="Center">
                                             <ComboBoxItem Content="Все категории" />
                                             <ComboBoxItem Content="Завтраки" />
                                             <ComboBoxItem Content="Ужины" />
@@ -726,7 +860,7 @@
                             </Grid>
 
                             <StackPanel Grid.Column="2">
-                                <Border Background="#243A31"
+                                <Border Background="#111827"
                                         CornerRadius="8"
                                         Padding="22"
                                         Effect="{StaticResource SoftShadow}">
@@ -740,15 +874,15 @@
                                                 VerticalAlignment="Top"
                                                 Width="246"
                                                 Height="150">
-                                            <Ellipse Width="148" Height="148" Canvas.Left="49" Canvas.Top="0" Fill="#335446" />
+                                            <Ellipse Width="148" Height="148" Canvas.Left="49" Canvas.Top="0" Fill="#334155" />
                                             <Rectangle Width="116" Height="80" Canvas.Left="65" Canvas.Top="40" RadiusX="8" RadiusY="8" Fill="#FFF7E8" />
                                             <Rectangle Width="82" Height="10" Canvas.Left="82" Canvas.Top="60" RadiusX="5" RadiusY="5" Fill="#D8B47B" />
-                                            <Rectangle Width="70" Height="8" Canvas.Left="82" Canvas.Top="80" RadiusX="4" RadiusY="4" Fill="#8FB59B" />
+                                            <Rectangle Width="70" Height="8" Canvas.Left="82" Canvas.Top="80" RadiusX="4" RadiusY="4" Fill="#8AA5D8" />
                                             <Rectangle Width="52" Height="8" Canvas.Left="82" Canvas.Top="99" RadiusX="4" RadiusY="4" Fill="#DD8061" />
                                             <Path Data="M34,128 C48,104 82,94 110,112 C132,126 158,126 181,110 C197,100 216,105 226,126 L226,140 L34,140 Z" Fill="#E7B768" />
                                             <Ellipse Width="34" Height="18" Canvas.Left="174" Canvas.Top="96" Fill="#F7E2A1" />
-                                            <Path Data="M189,97 C187,83 195,73 207,65" Stroke="#A8D3B4" StrokeThickness="5" StrokeStartLineCap="Round" StrokeEndLineCap="Round" />
-                                            <Path Data="M202,69 C216,63 228,69 231,82" Stroke="#A8D3B4" StrokeThickness="5" StrokeStartLineCap="Round" StrokeEndLineCap="Round" />
+                                            <Path Data="M189,97 C187,83 195,73 207,65" Stroke="#9CB7EA" StrokeThickness="5" StrokeStartLineCap="Round" StrokeEndLineCap="Round" />
+                                            <Path Data="M202,69 C216,63 228,69 231,82" Stroke="#9CB7EA" StrokeThickness="5" StrokeStartLineCap="Round" StrokeEndLineCap="Round" />
                                         </Canvas>
 
                                         <StackPanel Grid.Row="1">
