@@ -3,50 +3,128 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
         mc:Ignorable="d"
-        Title="RecipeKeeper"
+        Title="Книга рецептов"
         Width="1180"
         Height="760"
-        MinWidth="980"
-        MinHeight="640"
+        MinWidth="1040"
+        MinHeight="660"
         WindowStartupLocation="CenterScreen"
-        Background="#F6F7F4"
-        FontFamily="Segoe UI">
+        WindowStyle="None"
+        ResizeMode="CanResize"
+        Background="#EEF2ED"
+        FontFamily="Segoe UI"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="True">
+    <shell:WindowChrome.WindowChrome>
+        <shell:WindowChrome CaptionHeight="54"
+                            ResizeBorderThickness="8"
+                            GlassFrameThickness="0"
+                            UseAeroCaptionButtons="False" />
+    </shell:WindowChrome.WindowChrome>
+
     <Window.Resources>
         <DropShadowEffect x:Key="SoftShadow"
-                          BlurRadius="24"
-                          ShadowDepth="8"
+                          BlurRadius="22"
+                          ShadowDepth="6"
                           Direction="270"
-                          Color="#13000000"
-                          Opacity="0.72" />
+                          Color="#220F1A16"
+                          Opacity="0.55" />
+
+        <Style x:Key="TitleBarButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="42" />
+            <Setter Property="Height" Value="34" />
+            <Setter Property="Margin" Value="2,0,0,0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Foreground" Value="#566760" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="shell:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ChromeButton"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="7">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ChromeButton" Property="Background" Value="#E8EEE9" />
+                                <Setter Property="Foreground" Value="#20352D" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ChromeButton" Property="Background" Value="#DCE6DF" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CloseButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="42" />
+            <Setter Property="Height" Value="34" />
+            <Setter Property="Margin" Value="2,0,0,0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Foreground" Value="#566760" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="shell:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ChromeButton"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="7">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ChromeButton" Property="Background" Value="#D94F45" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ChromeButton" Property="Background" Value="#B93C34" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
         <Style x:Key="NavButtonStyle" TargetType="Button">
-            <Setter Property="Height" Value="44" />
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-            <Setter Property="Padding" Value="14,0" />
-            <Setter Property="Margin" Value="0,2" />
+            <Setter Property="Height" Value="46" />
+            <Setter Property="Padding" Value="12,0" />
+            <Setter Property="Margin" Value="0,3,0,0" />
             <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="Foreground" Value="#40524A" />
+            <Setter Property="Foreground" Value="#485951" />
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="ButtonBorder"
                                 Background="{TemplateBinding Background}"
-                                CornerRadius="8"
-                                SnapsToDevicePixels="True">
+                                CornerRadius="8">
                             <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               VerticalAlignment="Center" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ButtonBorder" Property="Background" Value="#E8EFE7" />
-                                <Setter Property="Foreground" Value="#213A30" />
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#E8EFE9" />
+                                <Setter Property="Foreground" Value="#23372F" />
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="ButtonBorder" Property="Background" Value="#DDE8DB" />
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#DDE8DF" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -55,14 +133,15 @@
         </Style>
 
         <Style x:Key="PrimaryButtonStyle" TargetType="Button">
-            <Setter Property="Height" Value="44" />
-            <Setter Property="Padding" Value="18,0" />
+            <Setter Property="MinWidth" Value="158" />
+            <Setter Property="Height" Value="42" />
+            <Setter Property="Padding" Value="16,0" />
             <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="Foreground" Value="White" />
             <Setter Property="Background" Value="#2F6F57" />
-            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
             <Setter Property="RenderTransform">
                 <Setter.Value>
@@ -76,14 +155,15 @@
                                 Background="{TemplateBinding Background}"
                                 CornerRadius="8">
                             <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center" />
+                                              VerticalAlignment="Center"
+                                              RecognizesAccessKey="True" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ButtonBorder" Property="Background" Value="#255E49" />
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#275D49" />
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="ButtonBorder" Property="Background" Value="#1E4D3D" />
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#1F4D3C" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -94,10 +174,10 @@
                     <BeginStoryboard>
                         <Storyboard>
                             <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
-                                             To="1.02"
+                                             To="1.015"
                                              Duration="0:0:0.12" />
                             <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
-                                             To="1.02"
+                                             To="1.015"
                                              Duration="0:0:0.12" />
                         </Storyboard>
                     </BeginStoryboard>
@@ -117,27 +197,52 @@
             </Style.Triggers>
         </Style>
 
+        <Style x:Key="IconButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="38" />
+            <Setter Property="Height" Value="38" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Foreground" Value="#52645C" />
+            <Setter Property="Background" Value="#F3F7F3" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ButtonBorder"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#E7EEE8" />
+                                <Setter Property="Foreground" Value="#20352D" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style x:Key="RecipeCardStyle" TargetType="Border">
-            <Setter Property="Background" Value="White" />
+            <Setter Property="Background" Value="#FFFFFF" />
             <Setter Property="CornerRadius" Value="8" />
-            <Setter Property="Padding" Value="18" />
-            <Setter Property="Margin" Value="0,0,0,14" />
+            <Setter Property="Padding" Value="16" />
+            <Setter Property="Margin" Value="0,0,0,12" />
             <Setter Property="Effect" Value="{StaticResource SoftShadow}" />
             <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
             <Setter Property="RenderTransform">
                 <Setter.Value>
-                    <ScaleTransform />
+                    <TranslateTransform />
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
                 <EventTrigger RoutedEvent="Mouse.MouseEnter">
                     <BeginStoryboard>
                         <Storyboard>
-                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
-                                             To="1.01"
-                                             Duration="0:0:0.14" />
-                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
-                                             To="1.01"
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                                             To="-2"
                                              Duration="0:0:0.14" />
                         </Storyboard>
                     </BeginStoryboard>
@@ -145,11 +250,8 @@
                 <EventTrigger RoutedEvent="Mouse.MouseLeave">
                     <BeginStoryboard>
                         <Storyboard>
-                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
-                                             To="1"
-                                             Duration="0:0:0.16" />
-                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
-                                             To="1"
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                                             To="0"
                                              Duration="0:0:0.16" />
                         </Storyboard>
                     </BeginStoryboard>
@@ -166,12 +268,12 @@
                                      Storyboard.TargetProperty="Opacity"
                                      From="0"
                                      To="1"
-                                     Duration="0:0:0.28" />
+                                     Duration="0:0:0.24" />
                     <DoubleAnimation Storyboard.TargetName="ShellTranslate"
                                      Storyboard.TargetProperty="Y"
-                                     From="18"
+                                     From="12"
                                      To="0"
-                                     Duration="0:0:0.28">
+                                     Duration="0:0:0.24">
                         <DoubleAnimation.EasingFunction>
                             <CubicEase EasingMode="EaseOut" />
                         </DoubleAnimation.EasingFunction>
@@ -181,521 +283,520 @@
         </EventTrigger>
     </Window.Triggers>
 
-    <Grid>
-        <Grid.Background>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Color="#F7F8F4" Offset="0" />
-                <GradientStop Color="#EEF4F1" Offset="0.52" />
-                <GradientStop Color="#F9F3ED" Offset="1" />
-            </LinearGradientBrush>
-        </Grid.Background>
+    <Border Background="#F7F8F4"
+            BorderBrush="#DDE6DF"
+            BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="54" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-        <Grid x:Name="Shell"
-              Margin="28"
-              Opacity="0">
-            <Grid.RenderTransform>
-                <TranslateTransform x:Name="ShellTranslate" />
-            </Grid.RenderTransform>
+            <Grid Grid.Row="0"
+                  Background="#FBFCF8"
+                  MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="240" />
-                <ColumnDefinition Width="24" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <Border Grid.Column="0"
-                    Background="#FDFDFB"
-                    CornerRadius="8"
-                    Padding="22"
-                    Effect="{StaticResource SoftShadow}">
-                <DockPanel LastChildFill="True">
-                    <StackPanel DockPanel.Dock="Top">
-                        <Grid Margin="0,0,0,32">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="42" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-
-                            <Border Width="42"
-                                    Height="42"
-                                    CornerRadius="8"
-                                    Background="#2F6F57">
-                                <TextBlock Text="R"
-                                           Foreground="White"
-                                           FontSize="20"
-                                           FontWeight="Bold"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" />
-                            </Border>
-
-                            <StackPanel Grid.Column="1"
-                                        Margin="12,0,0,0"
-                                        VerticalAlignment="Center">
-                                <TextBlock Text="RecipeKeeper"
-                                           Foreground="#1F2F2A"
-                                           FontSize="17"
-                                           FontWeight="SemiBold" />
-                                <TextBlock Text="Домашняя книга"
-                                           Foreground="#77847E"
-                                           FontSize="12" />
-                            </StackPanel>
-                        </Grid>
-
-                        <Button Style="{StaticResource NavButtonStyle}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="26" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="⌂" FontSize="16" VerticalAlignment="Center" />
-                                <TextBlock Grid.Column="1" Text="Все рецепты" VerticalAlignment="Center" />
-                            </Grid>
-                        </Button>
-                        <Button Style="{StaticResource NavButtonStyle}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="26" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="★" FontSize="14" VerticalAlignment="Center" />
-                                <TextBlock Grid.Column="1" Text="Избранное" VerticalAlignment="Center" />
-                            </Grid>
-                        </Button>
-                        <Button Style="{StaticResource NavButtonStyle}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="26" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="≡" FontSize="16" VerticalAlignment="Center" />
-                                <TextBlock Grid.Column="1" Text="Категории" VerticalAlignment="Center" />
-                            </Grid>
-                        </Button>
-                        <Button Style="{StaticResource NavButtonStyle}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="26" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="□" FontSize="14" VerticalAlignment="Center" />
-                                <TextBlock Grid.Column="1" Text="Список покупок" VerticalAlignment="Center" />
-                            </Grid>
-                        </Button>
-                    </StackPanel>
-
-                    <Border DockPanel.Dock="Bottom"
-                            Background="#EEF4F1"
-                            CornerRadius="8"
-                            Padding="14">
-                        <StackPanel>
-                            <TextBlock Text="Сегодня"
-                                       Foreground="#728079"
-                                       FontSize="12" />
-                            <TextBlock Text="12 рецептов"
-                                       Foreground="#1F2F2A"
-                                       FontSize="20"
-                                       FontWeight="SemiBold"
-                                       Margin="0,4,0,0" />
-                            <TextBlock Text="4 любимых блюда"
-                                       Foreground="#6A7771"
-                                       FontSize="12"
-                                       Margin="0,2,0,0" />
-                        </StackPanel>
-                    </Border>
-                </DockPanel>
-            </Border>
-
-            <Grid Grid.Column="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="24" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <StackPanel VerticalAlignment="Center">
-                        <TextBlock Text="Мои рецепты"
-                                   Foreground="#1F2F2A"
-                                   FontSize="34"
-                                   FontWeight="SemiBold" />
-                        <TextBlock Text="Сохраняйте блюда, заметки, ингредиенты и идеи в одном месте."
-                                   Foreground="#66756E"
-                                   FontSize="15"
-                                   Margin="0,6,0,0" />
-                    </StackPanel>
-
-                    <Button Grid.Column="1"
-                            Style="{StaticResource PrimaryButtonStyle}"
+                <StackPanel Orientation="Horizontal"
+                            Margin="22,0,0,0"
                             VerticalAlignment="Center">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="+"
-                                       FontSize="19"
-                                       FontWeight="SemiBold"
-                                       Margin="0,-1,8,0" />
-                            <TextBlock Text="Новый рецепт" VerticalAlignment="Center" />
-                        </StackPanel>
-                    </Button>
-                </Grid>
+                    <Border Width="30"
+                            Height="30"
+                            CornerRadius="8"
+                            Background="#2F6F57">
+                        <TextBlock Text="К"
+                                   Foreground="White"
+                                   FontSize="15"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" />
+                    </Border>
+                    <TextBlock Text="Книга рецептов"
+                               Foreground="#20352D"
+                               FontSize="15"
+                               FontWeight="SemiBold"
+                               VerticalAlignment="Center"
+                               Margin="10,0,0,0" />
+                </StackPanel>
 
-                <Grid Grid.Row="2">
+                <StackPanel Grid.Column="1"
+                            Orientation="Horizontal"
+                            Margin="0,0,10,0"
+                            VerticalAlignment="Center"
+                            shell:WindowChrome.IsHitTestVisibleInChrome="True">
+                    <Button Style="{StaticResource TitleBarButtonStyle}"
+                            Content="−"
+                            Click="MinimizeButton_Click" />
+                    <Button Style="{StaticResource TitleBarButtonStyle}"
+                            Content="□"
+                            Click="MaximizeButton_Click" />
+                    <Button Style="{StaticResource CloseButtonStyle}"
+                            Content="×"
+                            Click="CloseButton_Click" />
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#F7F8F4" Offset="0" />
+                        <GradientStop Color="#EEF4F1" Offset="0.56" />
+                        <GradientStop Color="#FBF3EA" Offset="1" />
+                    </LinearGradientBrush>
+                </Grid.Background>
+
+                <Grid x:Name="Shell"
+                      Margin="24"
+                      Opacity="0">
+                    <Grid.RenderTransform>
+                        <TranslateTransform x:Name="ShellTranslate" />
+                    </Grid.RenderTransform>
+
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="238" />
                         <ColumnDefinition Width="24" />
-                        <ColumnDefinition Width="340" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <Grid Grid.Column="0">
+                    <Border Grid.Column="0"
+                            Background="#FFFFFF"
+                            CornerRadius="8"
+                            Padding="20"
+                            Effect="{StaticResource SoftShadow}">
+                        <DockPanel LastChildFill="True">
+                            <StackPanel DockPanel.Dock="Top">
+                                <Grid Margin="0,0,0,28">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="44" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Width="44"
+                                            Height="44"
+                                            CornerRadius="8"
+                                            Background="#2F6F57">
+                                        <TextBlock Text="К"
+                                                   Foreground="White"
+                                                   FontSize="21"
+                                                   FontWeight="Bold"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center" />
+                                    </Border>
+
+                                    <StackPanel Grid.Column="1"
+                                                Margin="12,0,0,0"
+                                                VerticalAlignment="Center">
+                                        <TextBlock Text="Книга рецептов"
+                                                   Foreground="#1F2F2A"
+                                                   FontSize="17"
+                                                   FontWeight="SemiBold" />
+                                        <TextBlock Text="Домашняя коллекция"
+                                                   Foreground="#77847E"
+                                                   FontSize="12" />
+                                    </StackPanel>
+                                </Grid>
+
+                                <Button Style="{StaticResource NavButtonStyle}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="32" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Border Width="24" Height="24" CornerRadius="7" Background="#E8F0EA">
+                                            <TextBlock Text="⌂" Foreground="#2F6F57" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                        <TextBlock Grid.Column="1" Text="Все рецепты" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" />
+                                    </Grid>
+                                </Button>
+                                <Button Style="{StaticResource NavButtonStyle}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="32" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Border Width="24" Height="24" CornerRadius="7" Background="#F7EFE4">
+                                            <TextBlock Text="★" Foreground="#9A6B2C" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                        <TextBlock Grid.Column="1" Text="Избранное" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" />
+                                    </Grid>
+                                </Button>
+                                <Button Style="{StaticResource NavButtonStyle}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="32" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Border Width="24" Height="24" CornerRadius="7" Background="#F0EDF8">
+                                            <TextBlock Text="≡" Foreground="#6A5191" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                        <TextBlock Grid.Column="1" Text="Категории" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" />
+                                    </Grid>
+                                </Button>
+                                <Button Style="{StaticResource NavButtonStyle}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="32" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Border Width="24" Height="24" CornerRadius="7" Background="#EBF2F8">
+                                            <TextBlock Text="✓" Foreground="#3E6680" FontSize="13" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                        <TextBlock Grid.Column="1" Text="Покупки" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" />
+                                    </Grid>
+                                </Button>
+                            </StackPanel>
+
+                            <Border DockPanel.Dock="Bottom"
+                                    Background="#EEF4F1"
+                                    CornerRadius="8"
+                                    Padding="14">
+                                <StackPanel>
+                                    <TextBlock Text="Коллекция"
+                                               Foreground="#728079"
+                                               FontSize="12" />
+                                    <TextBlock Text="12 рецептов"
+                                               Foreground="#1F2F2A"
+                                               FontSize="20"
+                                               FontWeight="SemiBold"
+                                               Margin="0,4,0,0" />
+                                    <TextBlock Text="4 любимых блюда"
+                                               Foreground="#6A7771"
+                                               FontSize="12"
+                                               Margin="0,2,0,0" />
+                                </StackPanel>
+                            </Border>
+                        </DockPanel>
+                    </Border>
+
+                    <Grid Grid.Column="2">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="18" />
+                            <RowDefinition Height="20" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <Border Grid.Row="0"
-                                Background="White"
-                                CornerRadius="8"
-                                Padding="16"
-                                Effect="{StaticResource SoftShadow}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="14" />
-                                    <ColumnDefinition Width="160" />
-                                </Grid.ColumnDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
 
-                                <Border Height="44"
-                                        Background="#F3F6F4"
-                                        CornerRadius="8"
-                                        Padding="14,0">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="28" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Text="⌕"
-                                                   Foreground="#6C7B74"
-                                                   FontSize="18"
-                                                   VerticalAlignment="Center" />
-                                        <Grid Grid.Column="1">
-                                            <TextBox x:Name="SearchTextBox"
-                                                     Foreground="#243A31"
-                                                     Background="Transparent"
-                                                     BorderThickness="0"
-                                                     FontSize="14"
-                                                     VerticalContentAlignment="Center" />
-                                            <TextBlock Text="Поиск по названию или ингредиенту"
-                                                       Foreground="#6C7B74"
-                                                       FontSize="14"
-                                                       IsHitTestVisible="False"
-                                                       VerticalAlignment="Center">
-                                                <TextBlock.Style>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="Visibility" Value="Collapsed" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding Text, ElementName=SearchTextBox}" Value="">
-                                                                <Setter Property="Visibility" Value="Visible" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
-                                        </Grid>
-                                    </Grid>
-                                </Border>
-
-                                <ComboBox Grid.Column="2"
-                                          Height="44"
-                                          SelectedIndex="0"
-                                          Padding="12,0"
-                                          FontSize="14"
-                                          Foreground="#42524B">
-                                    <ComboBoxItem Content="Все категории" />
-                                    <ComboBoxItem Content="Завтраки" />
-                                    <ComboBoxItem Content="Ужины" />
-                                    <ComboBoxItem Content="Выпечка" />
-                                </ComboBox>
-                            </Grid>
-                        </Border>
-
-                        <ScrollViewer Grid.Row="2"
-                                      VerticalScrollBarVisibility="Auto"
-                                      Padding="0,0,10,0">
-                            <StackPanel>
-                                <Border Style="{StaticResource RecipeCardStyle}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="78" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <Border Width="64"
-                                                Height="64"
-                                                CornerRadius="8"
-                                                Background="#F3D8C6">
-                                            <Grid>
-                                                <Ellipse Width="36"
-                                                         Height="36"
-                                                         Fill="#E65F3C"
-                                                         HorizontalAlignment="Center"
-                                                         VerticalAlignment="Center" />
-                                                <Ellipse Width="16"
-                                                         Height="16"
-                                                         Fill="#F8E7B4"
-                                                         HorizontalAlignment="Right"
-                                                         VerticalAlignment="Top"
-                                                         Margin="0,12,14,0" />
-                                            </Grid>
-                                        </Border>
-
-                                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                            <TextBlock Text="Паста с томатами и базиликом"
-                                                       Foreground="#1F2F2A"
-                                                       FontSize="17"
-                                                       FontWeight="SemiBold" />
-                                            <TextBlock Text="25 минут • ужин • 7 ингредиентов"
-                                                       Foreground="#728079"
-                                                       FontSize="13"
-                                                       Margin="0,5,0,0" />
-                                        </StackPanel>
-
-                                        <Border Grid.Column="2"
-                                                Background="#EDF4EE"
-                                                CornerRadius="8"
-                                                Padding="12,7"
-                                                VerticalAlignment="Center">
-                                            <TextBlock Text="Италия"
-                                                       Foreground="#2F6F57"
-                                                       FontSize="12"
-                                                       FontWeight="SemiBold" />
-                                        </Border>
-                                    </Grid>
-                                </Border>
-
-                                <Border Style="{StaticResource RecipeCardStyle}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="78" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <Border Width="64"
-                                                Height="64"
-                                                CornerRadius="8"
-                                                Background="#DCEADE">
-                                            <Grid>
-                                                <Ellipse Width="42"
-                                                         Height="30"
-                                                         Fill="#4E9B6E"
-                                                         HorizontalAlignment="Center"
-                                                         VerticalAlignment="Center" />
-                                                <Rectangle Width="26"
-                                                           Height="8"
-                                                           Fill="#FFE8B7"
-                                                           RadiusX="4"
-                                                           RadiusY="4"
-                                                           HorizontalAlignment="Center"
-                                                           VerticalAlignment="Bottom"
-                                                           Margin="0,0,0,12" />
-                                            </Grid>
-                                        </Border>
-
-                                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                            <TextBlock Text="Куриный суп с зеленью"
-                                                       Foreground="#1F2F2A"
-                                                       FontSize="17"
-                                                       FontWeight="SemiBold" />
-                                            <TextBlock Text="55 минут • обед • семейный рецепт"
-                                                       Foreground="#728079"
-                                                       FontSize="13"
-                                                       Margin="0,5,0,0" />
-                                        </StackPanel>
-
-                                        <Border Grid.Column="2"
-                                                Background="#F4EEE5"
-                                                CornerRadius="8"
-                                                Padding="12,7"
-                                                VerticalAlignment="Center">
-                                            <TextBlock Text="Домашнее"
-                                                       Foreground="#9A5A2B"
-                                                       FontSize="12"
-                                                       FontWeight="SemiBold" />
-                                        </Border>
-                                    </Grid>
-                                </Border>
-
-                                <Border Style="{StaticResource RecipeCardStyle}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="78" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <Border Width="64"
-                                                Height="64"
-                                                CornerRadius="8"
-                                                Background="#E8E3F4">
-                                            <Grid>
-                                                <Ellipse Width="42"
-                                                         Height="42"
-                                                         Fill="#7955A6"
-                                                         HorizontalAlignment="Center"
-                                                         VerticalAlignment="Center" />
-                                                <Ellipse Width="12"
-                                                         Height="12"
-                                                         Fill="#F6F3FB"
-                                                         HorizontalAlignment="Left"
-                                                         VerticalAlignment="Top"
-                                                         Margin="15,15,0,0" />
-                                            </Grid>
-                                        </Border>
-
-                                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                            <TextBlock Text="Черничный чизкейк"
-                                                       Foreground="#1F2F2A"
-                                                       FontSize="17"
-                                                       FontWeight="SemiBold" />
-                                            <TextBlock Text="1 час 20 минут • десерт • заметки из интернета"
-                                                       Foreground="#728079"
-                                                       FontSize="13"
-                                                       Margin="0,5,0,0" />
-                                        </StackPanel>
-
-                                        <Border Grid.Column="2"
-                                                Background="#F0ECF7"
-                                                CornerRadius="8"
-                                                Padding="12,7"
-                                                VerticalAlignment="Center">
-                                            <TextBlock Text="Выпечка"
-                                                       Foreground="#6B4C9A"
-                                                       FontSize="12"
-                                                       FontWeight="SemiBold" />
-                                        </Border>
-                                    </Grid>
-                                </Border>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="Мои рецепты"
+                                           Foreground="#1F2F2A"
+                                           FontSize="32"
+                                           FontWeight="SemiBold" />
+                                <TextBlock Text="Сохраняйте блюда, заметки, ингредиенты и идеи в одном месте."
+                                           Foreground="#66756E"
+                                           FontSize="15"
+                                           Margin="0,6,0,0" />
                             </StackPanel>
-                        </ScrollViewer>
-                    </Grid>
 
-                    <StackPanel Grid.Column="2">
-                        <Border Background="#243A31"
-                                CornerRadius="8"
-                                Padding="24"
-                                Effect="{StaticResource SoftShadow}">
-                            <Grid Height="230">
+                            <StackPanel Grid.Column="1"
+                                        Orientation="Horizontal"
+                                        VerticalAlignment="Center">
+                                <Button Style="{StaticResource IconButtonStyle}"
+                                        Content="⌕"
+                                        Margin="0,0,10,0" />
+                                <Button Style="{StaticResource PrimaryButtonStyle}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="20" />
+                                            <ColumnDefinition Width="8" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="+"
+                                                   FontSize="18"
+                                                   FontWeight="SemiBold"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center" />
+                                        <TextBlock Grid.Column="2"
+                                                   Text="Новый рецепт"
+                                                   VerticalAlignment="Center" />
+                                    </Grid>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="24" />
+                                <ColumnDefinition Width="330" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.Column="0">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
                                     <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="16" />
+                                    <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
 
-                                <Canvas HorizontalAlignment="Center"
-                                        VerticalAlignment="Top"
-                                        Width="250"
-                                        Height="155">
-                                    <Ellipse Width="154"
-                                             Height="154"
-                                             Canvas.Left="48"
-                                             Canvas.Top="0"
-                                             Fill="#335446" />
-                                    <Rectangle Width="118"
-                                               Height="82"
-                                               Canvas.Left="66"
-                                               Canvas.Top="42"
-                                               RadiusX="8"
-                                               RadiusY="8"
-                                               Fill="#FFF7E8" />
-                                    <Rectangle Width="86"
-                                               Height="10"
-                                               Canvas.Left="82"
-                                               Canvas.Top="62"
-                                               RadiusX="5"
-                                               RadiusY="5"
-                                               Fill="#D8B47B" />
-                                    <Rectangle Width="72"
-                                               Height="8"
-                                               Canvas.Left="82"
-                                               Canvas.Top="82"
-                                               RadiusX="4"
-                                               RadiusY="4"
-                                               Fill="#8FB59B" />
-                                    <Rectangle Width="54"
-                                               Height="8"
-                                               Canvas.Left="82"
-                                               Canvas.Top="101"
-                                               RadiusX="4"
-                                               RadiusY="4"
-                                               Fill="#DD8061" />
-                                    <Path Data="M34,132 C48,104 82,94 110,114 C132,130 158,128 181,112 C197,101 216,106 226,128 L226,142 L34,142 Z"
-                                          Fill="#E7B768" />
-                                    <Ellipse Width="34"
-                                             Height="18"
-                                             Canvas.Left="176"
-                                             Canvas.Top="98"
-                                             Fill="#F7E2A1" />
-                                    <Path Data="M191,99 C188,83 195,73 207,65"
-                                          Stroke="#A8D3B4"
-                                          StrokeThickness="5"
-                                          StrokeStartLineCap="Round"
-                                          StrokeEndLineCap="Round" />
-                                    <Path Data="M202,69 C218,63 229,69 232,82"
-                                          Stroke="#A8D3B4"
-                                          StrokeThickness="5"
-                                          StrokeStartLineCap="Round"
-                                          StrokeEndLineCap="Round" />
-                                </Canvas>
+                                <Border Grid.Row="0"
+                                        Background="White"
+                                        CornerRadius="8"
+                                        Padding="14"
+                                        Effect="{StaticResource SoftShadow}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="12" />
+                                            <ColumnDefinition Width="162" />
+                                        </Grid.ColumnDefinitions>
 
-                                <StackPanel Grid.Row="1">
-                                    <TextBlock Text="Идея дня"
-                                               Foreground="#C9D8CF"
-                                               FontSize="13" />
-                                    <TextBlock Text="Добавьте рецепт, который давно лежит в закладках."
-                                               Foreground="White"
-                                               FontSize="21"
-                                               FontWeight="SemiBold"
-                                               TextWrapping="Wrap"
-                                               Margin="0,6,0,0" />
-                                </StackPanel>
+                                        <Border Height="42"
+                                                Background="#F3F6F4"
+                                                CornerRadius="8"
+                                                Padding="13,0">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="28" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="⌕"
+                                                           Foreground="#66776F"
+                                                           FontSize="17"
+                                                           VerticalAlignment="Center" />
+                                                <Grid Grid.Column="1">
+                                                    <TextBox x:Name="SearchTextBox"
+                                                             Foreground="#243A31"
+                                                             Background="Transparent"
+                                                             BorderThickness="0"
+                                                             FontSize="14"
+                                                             VerticalContentAlignment="Center" />
+                                                    <TextBlock Text="Поиск по названию или ингредиенту"
+                                                               Foreground="#6C7B74"
+                                                               FontSize="14"
+                                                               IsHitTestVisible="False"
+                                                               VerticalAlignment="Center">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Text, ElementName=SearchTextBox}" Value="">
+                                                                        <Setter Property="Visibility" Value="Visible" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                </Grid>
+                                            </Grid>
+                                        </Border>
+
+                                        <ComboBox Grid.Column="2"
+                                                  Height="42"
+                                                  SelectedIndex="0"
+                                                  Padding="12,0"
+                                                  FontSize="14"
+                                                  Foreground="#42524B">
+                                            <ComboBoxItem Content="Все категории" />
+                                            <ComboBoxItem Content="Завтраки" />
+                                            <ComboBoxItem Content="Ужины" />
+                                            <ComboBoxItem Content="Выпечка" />
+                                        </ComboBox>
+                                    </Grid>
+                                </Border>
+
+                                <ScrollViewer Grid.Row="2"
+                                              VerticalScrollBarVisibility="Auto"
+                                              Padding="0,0,10,0">
+                                    <StackPanel>
+                                        <Border Style="{StaticResource RecipeCardStyle}">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="74" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <Border Width="58" Height="58" CornerRadius="8" Background="#F3D8C6">
+                                                    <Grid>
+                                                        <Ellipse Width="34" Height="34" Fill="#E65F3C" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <Ellipse Width="14" Height="14" Fill="#F8E7B4" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,12,13,0" />
+                                                    </Grid>
+                                                </Border>
+
+                                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                                    <TextBlock Text="Паста с томатами и базиликом"
+                                                               Foreground="#1F2F2A"
+                                                               FontSize="16"
+                                                               FontWeight="SemiBold" />
+                                                    <TextBlock Text="25 минут · ужин · 7 ингредиентов"
+                                                               Foreground="#728079"
+                                                               FontSize="13"
+                                                               Margin="0,5,0,0" />
+                                                </StackPanel>
+
+                                                <Border Grid.Column="2"
+                                                        Background="#EDF4EE"
+                                                        CornerRadius="8"
+                                                        Padding="12,7"
+                                                        VerticalAlignment="Center">
+                                                    <TextBlock Text="Италия"
+                                                               Foreground="#2F6F57"
+                                                               FontSize="12"
+                                                               FontWeight="SemiBold" />
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+
+                                        <Border Style="{StaticResource RecipeCardStyle}">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="74" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <Border Width="58" Height="58" CornerRadius="8" Background="#DCEADE">
+                                                    <Grid>
+                                                        <Ellipse Width="40" Height="28" Fill="#4E9B6E" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <Rectangle Width="24" Height="8" Fill="#FFE8B7" RadiusX="4" RadiusY="4" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,11" />
+                                                    </Grid>
+                                                </Border>
+
+                                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                                    <TextBlock Text="Куриный суп с зеленью"
+                                                               Foreground="#1F2F2A"
+                                                               FontSize="16"
+                                                               FontWeight="SemiBold" />
+                                                    <TextBlock Text="55 минут · обед · семейный рецепт"
+                                                               Foreground="#728079"
+                                                               FontSize="13"
+                                                               Margin="0,5,0,0" />
+                                                </StackPanel>
+
+                                                <Border Grid.Column="2"
+                                                        Background="#F4EEE5"
+                                                        CornerRadius="8"
+                                                        Padding="12,7"
+                                                        VerticalAlignment="Center">
+                                                    <TextBlock Text="Домашнее"
+                                                               Foreground="#9A5A2B"
+                                                               FontSize="12"
+                                                               FontWeight="SemiBold" />
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+
+                                        <Border Style="{StaticResource RecipeCardStyle}">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="74" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <Border Width="58" Height="58" CornerRadius="8" Background="#E8E3F4">
+                                                    <Grid>
+                                                        <Ellipse Width="40" Height="40" Fill="#7955A6" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <Ellipse Width="11" Height="11" Fill="#F6F3FB" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="14,14,0,0" />
+                                                    </Grid>
+                                                </Border>
+
+                                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                                    <TextBlock Text="Черничный чизкейк"
+                                                               Foreground="#1F2F2A"
+                                                               FontSize="16"
+                                                               FontWeight="SemiBold" />
+                                                    <TextBlock Text="1 час 20 минут · десерт · заметки из интернета"
+                                                               Foreground="#728079"
+                                                               FontSize="13"
+                                                               Margin="0,5,0,0" />
+                                                </StackPanel>
+
+                                                <Border Grid.Column="2"
+                                                        Background="#F0ECF7"
+                                                        CornerRadius="8"
+                                                        Padding="12,7"
+                                                        VerticalAlignment="Center">
+                                                    <TextBlock Text="Выпечка"
+                                                               Foreground="#6B4C9A"
+                                                               FontSize="12"
+                                                               FontWeight="SemiBold" />
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </StackPanel>
+                                </ScrollViewer>
                             </Grid>
-                        </Border>
 
-                        <Border Background="White"
-                                CornerRadius="8"
-                                Padding="20"
-                                Margin="0,18,0,0"
-                                Effect="{StaticResource SoftShadow}">
-                            <StackPanel>
-                                <TextBlock Text="Быстрые категории"
-                                           Foreground="#1F2F2A"
-                                           FontSize="17"
-                                           FontWeight="SemiBold" />
+                            <StackPanel Grid.Column="2">
+                                <Border Background="#243A31"
+                                        CornerRadius="8"
+                                        Padding="22"
+                                        Effect="{StaticResource SoftShadow}">
+                                    <Grid Height="228">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
 
-                                <UniformGrid Columns="2"
-                                             Margin="0,16,0,0">
-                                    <Border Background="#F3F6F4" CornerRadius="8" Padding="12" Margin="0,0,8,8">
-                                        <TextBlock Text="Завтраки" Foreground="#40524A" FontWeight="SemiBold" />
-                                    </Border>
-                                    <Border Background="#F7F1EA" CornerRadius="8" Padding="12" Margin="8,0,0,8">
-                                        <TextBlock Text="Ужины" Foreground="#7A5836" FontWeight="SemiBold" />
-                                    </Border>
-                                    <Border Background="#F2EEF7" CornerRadius="8" Padding="12" Margin="0,8,8,0">
-                                        <TextBlock Text="Десерты" Foreground="#684C8F" FontWeight="SemiBold" />
-                                    </Border>
-                                    <Border Background="#EEF3F8" CornerRadius="8" Padding="12" Margin="8,8,0,0">
-                                        <TextBlock Text="Напитки" Foreground="#365B73" FontWeight="SemiBold" />
-                                    </Border>
-                                </UniformGrid>
+                                        <Canvas HorizontalAlignment="Center"
+                                                VerticalAlignment="Top"
+                                                Width="246"
+                                                Height="150">
+                                            <Ellipse Width="148" Height="148" Canvas.Left="49" Canvas.Top="0" Fill="#335446" />
+                                            <Rectangle Width="116" Height="80" Canvas.Left="65" Canvas.Top="40" RadiusX="8" RadiusY="8" Fill="#FFF7E8" />
+                                            <Rectangle Width="82" Height="10" Canvas.Left="82" Canvas.Top="60" RadiusX="5" RadiusY="5" Fill="#D8B47B" />
+                                            <Rectangle Width="70" Height="8" Canvas.Left="82" Canvas.Top="80" RadiusX="4" RadiusY="4" Fill="#8FB59B" />
+                                            <Rectangle Width="52" Height="8" Canvas.Left="82" Canvas.Top="99" RadiusX="4" RadiusY="4" Fill="#DD8061" />
+                                            <Path Data="M34,128 C48,104 82,94 110,112 C132,126 158,126 181,110 C197,100 216,105 226,126 L226,140 L34,140 Z" Fill="#E7B768" />
+                                            <Ellipse Width="34" Height="18" Canvas.Left="174" Canvas.Top="96" Fill="#F7E2A1" />
+                                            <Path Data="M189,97 C187,83 195,73 207,65" Stroke="#A8D3B4" StrokeThickness="5" StrokeStartLineCap="Round" StrokeEndLineCap="Round" />
+                                            <Path Data="M202,69 C216,63 228,69 231,82" Stroke="#A8D3B4" StrokeThickness="5" StrokeStartLineCap="Round" StrokeEndLineCap="Round" />
+                                        </Canvas>
+
+                                        <StackPanel Grid.Row="1">
+                                            <TextBlock Text="Идея дня"
+                                                       Foreground="#C9D8CF"
+                                                       FontSize="13" />
+                                            <TextBlock Text="Добавьте рецепт, который давно лежит в закладках."
+                                                       Foreground="White"
+                                                       FontSize="20"
+                                                       FontWeight="SemiBold"
+                                                       TextWrapping="Wrap"
+                                                       Margin="0,6,0,0" />
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+
+                                <Border Background="White"
+                                        CornerRadius="8"
+                                        Padding="18"
+                                        Margin="0,16,0,0"
+                                        Effect="{StaticResource SoftShadow}">
+                                    <StackPanel>
+                                        <TextBlock Text="Быстрые категории"
+                                                   Foreground="#1F2F2A"
+                                                   FontSize="17"
+                                                   FontWeight="SemiBold" />
+
+                                        <UniformGrid Columns="2" Margin="0,14,0,0">
+                                            <Border Background="#F3F6F4" CornerRadius="8" Padding="12" Margin="0,0,7,7">
+                                                <TextBlock Text="Завтраки" Foreground="#40524A" FontWeight="SemiBold" />
+                                            </Border>
+                                            <Border Background="#F7F1EA" CornerRadius="8" Padding="12" Margin="7,0,0,7">
+                                                <TextBlock Text="Ужины" Foreground="#7A5836" FontWeight="SemiBold" />
+                                            </Border>
+                                            <Border Background="#F2EEF7" CornerRadius="8" Padding="12" Margin="0,7,7,0">
+                                                <TextBlock Text="Десерты" Foreground="#684C8F" FontWeight="SemiBold" />
+                                            </Border>
+                                            <Border Background="#EEF3F8" CornerRadius="8" Padding="12" Margin="7,7,0,0">
+                                                <TextBlock Text="Напитки" Foreground="#365B73" FontWeight="SemiBold" />
+                                            </Border>
+                                        </UniformGrid>
+                                    </StackPanel>
+                                </Border>
                             </StackPanel>
-                        </Border>
-                    </StackPanel>
+                        </Grid>
+                    </Grid>
                 </Grid>
             </Grid>
         </Grid>
-    </Grid>
+    </Border>
 </Window>

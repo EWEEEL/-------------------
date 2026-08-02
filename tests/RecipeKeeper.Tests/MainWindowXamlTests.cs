@@ -12,10 +12,11 @@ public sealed class MainWindowXamlTests
     {
         var window = LoadMainWindow();
 
-        Assert.AreEqual("RecipeKeeper", (string?)window.Attribute("Title"));
+        Assert.AreEqual("Книга рецептов", (string?)window.Attribute("Title"));
         Assert.AreEqual("CenterScreen", (string?)window.Attribute("WindowStartupLocation"));
-        Assert.AreEqual("980", (string?)window.Attribute("MinWidth"));
-        Assert.AreEqual("640", (string?)window.Attribute("MinHeight"));
+        Assert.AreEqual("1040", (string?)window.Attribute("MinWidth"));
+        Assert.AreEqual("660", (string?)window.Attribute("MinHeight"));
+        Assert.AreEqual("None", (string?)window.Attribute("WindowStyle"));
     }
 
     [TestMethod]
@@ -28,6 +29,7 @@ public sealed class MainWindowXamlTests
         StringAssert.Contains(text, "Поиск по названию или ингредиенту");
         StringAssert.Contains(text, "Быстрые категории");
         StringAssert.Contains(text, "Паста с томатами и базиликом");
+        StringAssert.Contains(text, "WindowChrome");
     }
 
     [TestMethod]
