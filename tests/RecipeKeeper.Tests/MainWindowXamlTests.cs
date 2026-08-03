@@ -1,12 +1,11 @@
 using System.Xml.Linq;
+using System.Text.RegularExpressions;
 
 namespace RecipeKeeper.Tests;
 
 [TestClass]
 public sealed class MainWindowXamlTests
 {
-    private static readonly XNamespace Presentation = "http://schemas.microsoft.com/winfx/2006/xaml/presentation";
-
     [TestMethod]
     public void MainWindowKeepsExpectedApplicationIdentity()
     {
@@ -17,35 +16,57 @@ public sealed class MainWindowXamlTests
         Assert.AreEqual("1040", (string?)window.Attribute("MinWidth"));
         Assert.AreEqual("660", (string?)window.Attribute("MinHeight"));
         Assert.AreEqual("None", (string?)window.Attribute("WindowStyle"));
+        Assert.AreEqual("NoResize", (string?)window.Attribute("ResizeMode"));
     }
 
     [TestMethod]
-    public void MainWindowContainsCoreRecipeInterfaceSections()
+    public void MainWindowContainsClickableNavigationAndActions()
     {
         var text = File.ReadAllText(GetMainWindowPath());
 
-        StringAssert.Contains(text, "Мои рецепты");
-        StringAssert.Contains(text, "Новый рецепт");
-        StringAssert.Contains(text, "Поиск по названию или ингредиенту");
-        StringAssert.Contains(text, "Быстрые категории");
-        StringAssert.Contains(text, "Паста с томатами и базиликом");
-        StringAssert.Contains(text, "WindowChrome");
-        StringAssert.Contains(text, "ThemeToggleButton");
-        StringAssert.Contains(text, "CategoryComboBoxStyle");
-        StringAssert.Contains(text, "ThemeToggleButton_Click");
+        StringAssert.Contains(text, "AllRecipesButton");
+        StringAssert.Contains(text, "FavoritesButton");
+        StringAssert.Contains(text, "CategoriesButton");
+        StringAssert.Contains(text, "NewRecipeButton_Click");
         StringAssert.Contains(text, "SearchButton_Click");
+        StringAssert.Contains(text, "ThemeToggleButton_Click");
+        StringAssert.Contains(text, "LanguageToggleButton");
+        StringAssert.DoesNotMatch(text, new Regex("ShoppingButton"));
+        StringAssert.Contains(text, "WindowChrome");
     }
 
     [TestMethod]
-    public void MainWindowUsesLightweightXamlAnimations()
+    public void MainWindowContainsRecipeEditorInputs()
     {
-        var window = LoadMainWindow();
+        var text = File.ReadAllText(GetMainWindowPath());
 
-        var storyboards = window.Descendants(Presentation + "Storyboard").ToList();
-        var doubleAnimations = window.Descendants(Presentation + "DoubleAnimation").ToList();
+        StringAssert.Contains(text, "EditorOverlay");
+        StringAssert.Contains(text, "DialogOverlay");
+        StringAssert.Contains(text, "DialogPrimaryButton_Click");
+        StringAssert.Contains(text, "RecipeTitleTextBox");
+        StringAssert.Contains(text, "RecipeCategoryComboBox");
+        StringAssert.Contains(text, "IngredientsPanel");
+        StringAssert.Contains(text, "StepsPanel");
+        StringAssert.Contains(text, "SaveRecipeButton_Click");
+    }
 
-        Assert.IsGreaterThanOrEqualTo(3, storyboards.Count);
-        Assert.IsGreaterThanOrEqualTo(6, doubleAnimations.Count);
+    [TestMethod]
+    public void MainWindowCodePersistsRecipesAndSupportsViews()
+    {
+        var text = File.ReadAllText(GetMainWindowCodePath());
+
+        StringAssert.Contains(text, "recipes.json");
+        StringAssert.Contains(text, "SaveRecipes");
+        StringAssert.Contains(text, "LoadRecipes");
+        StringAssert.Contains(text, "AppView.Favorites");
+        StringAssert.Contains(text, "AppView.Categories");
+        StringAssert.Contains(text, "LanguageToggleButton_Click");
+        StringAssert.Contains(text, "UiLanguage.En");
+        StringAssert.Contains(text, "DeleteRecipe");
+        StringAssert.Contains(text, "DeleteRecipeConfirmation");
+        StringAssert.Contains(text, "ShowAppDialogAsync");
+        StringAssert.DoesNotMatch(text, new Regex("MessageBox\\.Show"));
+        StringAssert.DoesNotMatch(text, new Regex("AppView.Shopping"));
     }
 
     private static XElement LoadMainWindow()
@@ -58,6 +79,12 @@ public sealed class MainWindowXamlTests
     {
         var root = FindRepositoryRoot();
         return Path.Combine(root.FullName, "src", "RecipeKeeper", "MainWindow.xaml");
+    }
+
+    private static string GetMainWindowCodePath()
+    {
+        var root = FindRepositoryRoot();
+        return Path.Combine(root.FullName, "src", "RecipeKeeper", "MainWindow.xaml.cs");
     }
 
     private static DirectoryInfo FindRepositoryRoot()
