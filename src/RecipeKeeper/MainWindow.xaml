@@ -12,19 +12,33 @@
         MinHeight="660"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
-        ResizeMode="CanResize"
-        Background="#EEF2ED"
+        ResizeMode="NoResize"
+        Background="{DynamicResource AppBackgroundBrush}"
         FontFamily="Segoe UI"
         SnapsToDevicePixels="True"
         UseLayoutRounding="True">
     <shell:WindowChrome.WindowChrome>
         <shell:WindowChrome CaptionHeight="54"
-                            ResizeBorderThickness="8"
+                            ResizeBorderThickness="0"
                             GlassFrameThickness="0"
                             UseAeroCaptionButtons="False" />
     </shell:WindowChrome.WindowChrome>
 
     <Window.Resources>
+        <SolidColorBrush x:Key="AppBackgroundBrush" Color="#F7F8F4" />
+        <SolidColorBrush x:Key="TopBarBrush" Color="#FBFCF8" />
+        <SolidColorBrush x:Key="PanelBrush" Color="#FFFFFF" />
+        <SolidColorBrush x:Key="CardBrush" Color="#FFFFFF" />
+        <SolidColorBrush x:Key="InputBrush" Color="#F3F6F4" />
+        <SolidColorBrush x:Key="TextBrush" Color="#111827" />
+        <SolidColorBrush x:Key="MutedTextBrush" Color="#66756E" />
+        <SolidColorBrush x:Key="BorderBrushSoft" Color="#DDE6DF" />
+        <SolidColorBrush x:Key="AccentBrush" Color="#1F2937" />
+        <SolidColorBrush x:Key="AccentHoverBrush" Color="#111827" />
+        <SolidColorBrush x:Key="IconSurfaceBrush" Color="#F3F7F3" />
+        <SolidColorBrush x:Key="PromoBrush" Color="#111827" />
+        <SolidColorBrush x:Key="BlueAccentBrush" Color="#2563EB" />
+
         <DropShadowEffect x:Key="SoftShadow"
                           BlurRadius="22"
                           ShadowDepth="6"
@@ -32,12 +46,12 @@
                           Color="#220F1A16"
                           Opacity="0.55" />
 
-        <Style x:Key="TitleBarButtonStyle" TargetType="Button">
+        <Style x:Key="ChromeButtonStyle" TargetType="Button">
             <Setter Property="Width" Value="42" />
             <Setter Property="Height" Value="34" />
             <Setter Property="Margin" Value="2,0,0,0" />
             <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="Foreground" Value="#566760" />
+            <Setter Property="Foreground" Value="{DynamicResource MutedTextBrush}" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="FontSize" Value="15" />
@@ -49,16 +63,12 @@
                         <Border x:Name="ChromeButton"
                                 Background="{TemplateBinding Background}"
                                 CornerRadius="7">
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center" />
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ChromeButton" Property="Background" Value="#E8EEE9" />
-                                <Setter Property="Foreground" Value="#20352D" />
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="ChromeButton" Property="Background" Value="#DCE6DF" />
+                                <Setter TargetName="ChromeButton" Property="Background" Value="{DynamicResource InputBrush}" />
+                                <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -66,25 +76,15 @@
             </Setter>
         </Style>
 
-        <Style x:Key="CloseButtonStyle" TargetType="Button">
-            <Setter Property="Width" Value="42" />
-            <Setter Property="Height" Value="34" />
-            <Setter Property="Margin" Value="2,0,0,0" />
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="Foreground" Value="#566760" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderThickness" Value="0" />
+        <Style x:Key="CloseButtonStyle" TargetType="Button" BasedOn="{StaticResource ChromeButtonStyle}">
             <Setter Property="FontSize" Value="16" />
-            <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="shell:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="ChromeButton"
                                 Background="{TemplateBinding Background}"
                                 CornerRadius="7">
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center" />
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
@@ -102,10 +102,10 @@
 
         <Style x:Key="NavButtonStyle" TargetType="Button">
             <Setter Property="Height" Value="46" />
-            <Setter Property="Padding" Value="12,0" />
+            <Setter Property="Padding" Value="14,0" />
             <Setter Property="Margin" Value="0,3,0,0" />
             <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="Foreground" Value="#485951" />
+            <Setter Property="Foreground" Value="{DynamicResource MutedTextBrush}" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -115,16 +115,12 @@
                         <Border x:Name="ButtonBorder"
                                 Background="{TemplateBinding Background}"
                                 CornerRadius="8">
-                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              VerticalAlignment="Center" />
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ButtonBorder" Property="Background" Value="#E8EFE9" />
-                                <Setter Property="Foreground" Value="#23372F" />
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="ButtonBorder" Property="Background" Value="#DDE8DF" />
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource InputBrush}" />
+                                <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -133,76 +129,67 @@
         </Style>
 
         <Style x:Key="PrimaryButtonStyle" TargetType="Button">
-            <Setter Property="MinWidth" Value="164" />
+            <Setter Property="MinWidth" Value="150" />
             <Setter Property="Height" Value="44" />
             <Setter Property="Padding" Value="18,0" />
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Foreground" Value="White" />
-            <Setter Property="Background" Value="#1F2937" />
+            <Setter Property="Background" Value="{DynamicResource AccentBrush}" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="FontSize" Value="14" />
             <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
-            <Setter Property="RenderTransform">
-                <Setter.Value>
-                    <ScaleTransform />
-                </Setter.Value>
-            </Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="ButtonBorder"
                                 Background="{TemplateBinding Background}"
                                 CornerRadius="8">
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"
-                                              RecognizesAccessKey="True" />
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ButtonBorder" Property="Background" Value="#111827" />
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="ButtonBorder" Property="Background" Value="#0B1220" />
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource AccentHoverBrush}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Style.Triggers>
-                <EventTrigger RoutedEvent="Mouse.MouseEnter">
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
-                                             To="1.015"
-                                             Duration="0:0:0.12" />
-                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
-                                             To="1.015"
-                                             Duration="0:0:0.12" />
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-                <EventTrigger RoutedEvent="Mouse.MouseLeave">
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
-                                             To="1"
-                                             Duration="0:0:0.14" />
-                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
-                                             To="1"
-                                             Duration="0:0:0.14" />
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SecondaryButtonStyle" TargetType="Button">
+            <Setter Property="MinWidth" Value="116" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="Padding" Value="15,0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+            <Setter Property="Background" Value="{DynamicResource InputBrush}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ButtonBorder"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource IconSurfaceBrush}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
         <Style x:Key="IconButtonStyle" TargetType="Button">
             <Setter Property="Width" Value="38" />
             <Setter Property="Height" Value="38" />
             <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="Foreground" Value="#52645C" />
-            <Setter Property="Background" Value="#F3F7F3" />
+            <Setter Property="Foreground" Value="{DynamicResource MutedTextBrush}" />
+            <Setter Property="Background" Value="{DynamicResource IconSurfaceBrush}" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="FontSize" Value="16" />
             <Setter Property="Template">
@@ -211,13 +198,12 @@
                         <Border x:Name="ButtonBorder"
                                 Background="{TemplateBinding Background}"
                                 CornerRadius="8">
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center" />
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ButtonBorder" Property="Background" Value="#E7EEE8" />
-                                <Setter Property="Foreground" Value="#20352D" />
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource InputBrush}" />
+                                <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -225,12 +211,44 @@
             </Setter>
         </Style>
 
-        <Style x:Key="CategoryComboBoxItemStyle" TargetType="ComboBoxItem">
+        <Style x:Key="InputTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Height" Value="42" />
+            <Setter Property="Padding" Value="12,0" />
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+            <Setter Property="Background" Value="{DynamicResource InputBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushSoft}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="InputBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="8">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="InputBorder" Property="BorderBrush" Value="{DynamicResource BlueAccentBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="InputBorder" Property="Background" Value="{DynamicResource IconSurfaceBrush}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ComboBoxItemStyle" TargetType="ComboBoxItem">
             <Setter Property="MinHeight" Value="34" />
             <Setter Property="Padding" Value="12,0" />
-            <Setter Property="Foreground" Value="#40524A" />
-            <Setter Property="FontSize" Value="13" />
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ComboBoxItem">
@@ -238,16 +256,14 @@
                                 Background="Transparent"
                                 CornerRadius="7"
                                 Padding="{TemplateBinding Padding}">
-                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              VerticalAlignment="Center" />
+                            <ContentPresenter VerticalAlignment="Center" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsHighlighted" Value="True">
-                                <Setter TargetName="ItemBorder" Property="Background" Value="#EEF2FF" />
+                                <Setter TargetName="ItemBorder" Property="Background" Value="{DynamicResource InputBrush}" />
                             </Trigger>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="ItemBorder" Property="Background" Value="#E5EFE8" />
-                                <Setter Property="Foreground" Value="#2563EB" />
+                                <Setter Property="Foreground" Value="{DynamicResource BlueAccentBrush}" />
                                 <Setter Property="FontWeight" Value="SemiBold" />
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -256,16 +272,15 @@
             </Setter>
         </Style>
 
-        <Style x:Key="CategoryComboBoxStyle" TargetType="ComboBox">
+        <Style x:Key="InputComboBoxStyle" TargetType="ComboBox">
             <Setter Property="Height" Value="42" />
-            <Setter Property="Padding" Value="14,0" />
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="Foreground" Value="#40524A" />
-            <Setter Property="Background" Value="#F3F6F4" />
-            <Setter Property="BorderBrush" Value="#E5ECE7" />
+            <Setter Property="Padding" Value="12,0" />
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+            <Setter Property="Background" Value="{DynamicResource InputBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushSoft}" />
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="ItemContainerStyle" Value="{StaticResource CategoryComboBoxItemStyle}" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="ItemContainerStyle" Value="{StaticResource ComboBoxItemStyle}" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ComboBox">
@@ -283,8 +298,7 @@
                                     <ContentPresenter Content="{TemplateBinding SelectionBoxItem}"
                                                       ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                                                       ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
-                                                      VerticalAlignment="Center"
-                                                      RecognizesAccessKey="True" />
+                                                      VerticalAlignment="Center" />
                                     <Path Grid.Column="1"
                                           Data="M 3 6 L 9 12 L 15 6"
                                           Stroke="{TemplateBinding Foreground}"
@@ -296,22 +310,19 @@
                                           VerticalAlignment="Center" />
                                 </Grid>
                             </Border>
-
                             <ToggleButton Focusable="False"
                                           Opacity="0"
                                           ClickMode="Press"
                                           IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" />
-
-                            <Popup x:Name="Popup"
-                                   Placement="Bottom"
+                            <Popup Placement="Bottom"
                                    AllowsTransparency="True"
                                    Focusable="False"
                                    IsOpen="{TemplateBinding IsDropDownOpen}"
                                    PopupAnimation="Fade">
                                 <Border MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
                                         Margin="0,6,0,0"
-                                        Background="White"
-                                        BorderBrush="#E2EAE4"
+                                        Background="{DynamicResource CardBrush}"
+                                        BorderBrush="{DynamicResource BorderBrushSoft}"
                                         BorderThickness="1"
                                         CornerRadius="8"
                                         Padding="5"
@@ -324,12 +335,10 @@
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ComboSurface" Property="Background" Value="#ECF2EE" />
-                                <Setter TargetName="ComboSurface" Property="BorderBrush" Value="#D4E1D8" />
+                                <Setter TargetName="ComboSurface" Property="Background" Value="{DynamicResource IconSurfaceBrush}" />
                             </Trigger>
                             <Trigger Property="IsDropDownOpen" Value="True">
-                                <Setter TargetName="ComboSurface" Property="Background" Value="#EDEFF5" />
-                                <Setter TargetName="ComboSurface" Property="BorderBrush" Value="#B8D0C2" />
+                                <Setter TargetName="ComboSurface" Property="BorderBrush" Value="{DynamicResource BlueAccentBrush}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -337,67 +346,102 @@
             </Setter>
         </Style>
 
+        <Style x:Key="ModernCheckBoxStyle" TargetType="CheckBox">
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <StackPanel Orientation="Horizontal">
+                            <Border x:Name="CheckBoxMark"
+                                    Width="20"
+                                    Height="20"
+                                    CornerRadius="6"
+                                    Background="{DynamicResource InputBrush}"
+                                    BorderBrush="{DynamicResource BorderBrushSoft}"
+                                    BorderThickness="1"
+                                    Margin="0,0,9,0">
+                                <TextBlock x:Name="CheckGlyph"
+                                           Text="✓"
+                                           Foreground="White"
+                                           FontSize="13"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Visibility="Collapsed" />
+                            </Border>
+                            <ContentPresenter VerticalAlignment="Center" />
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="CheckBoxMark" Property="Background" Value="{DynamicResource BlueAccentBrush}" />
+                                <Setter TargetName="CheckBoxMark" Property="BorderBrush" Value="{DynamicResource BlueAccentBrush}" />
+                                <Setter TargetName="CheckGlyph" Property="Visibility" Value="Visible" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Thumb">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Thumb">
+                        <Border Background="{DynamicResource BorderBrushSoft}"
+                                CornerRadius="4" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="ScrollBar">
+            <Setter Property="Width" Value="4" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollBar">
+                        <Grid Background="Transparent">
+                            <Track x:Name="PART_Track"
+                                   IsDirectionReversed="True">
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}"
+                                                  Opacity="0"
+                                                  IsTabStop="False" />
+                                </Track.DecreaseRepeatButton>
+                                <Track.Thumb>
+                                    <Thumb MinHeight="36" />
+                                </Track.Thumb>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}"
+                                                  Opacity="0"
+                                                  IsTabStop="False" />
+                                </Track.IncreaseRepeatButton>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="Orientation" Value="Horizontal">
+                    <Setter Property="Height" Value="8" />
+                    <Setter Property="Width" Value="Auto" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
         <Style x:Key="RecipeCardStyle" TargetType="Border">
-            <Setter Property="Background" Value="#FFFFFF" />
+            <Setter Property="Background" Value="{DynamicResource CardBrush}" />
             <Setter Property="CornerRadius" Value="8" />
             <Setter Property="Padding" Value="16" />
             <Setter Property="Margin" Value="0,0,0,12" />
             <Setter Property="Effect" Value="{StaticResource SoftShadow}" />
-            <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
-            <Setter Property="RenderTransform">
-                <Setter.Value>
-                    <TranslateTransform />
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <EventTrigger RoutedEvent="Mouse.MouseEnter">
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
-                                             To="-2"
-                                             Duration="0:0:0.14" />
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-                <EventTrigger RoutedEvent="Mouse.MouseLeave">
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
-                                             To="0"
-                                             Duration="0:0:0.16" />
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-            </Style.Triggers>
         </Style>
     </Window.Resources>
 
-    <Window.Triggers>
-        <EventTrigger RoutedEvent="Window.Loaded">
-            <BeginStoryboard>
-                <Storyboard>
-                    <DoubleAnimation Storyboard.TargetName="Shell"
-                                     Storyboard.TargetProperty="Opacity"
-                                     From="0"
-                                     To="1"
-                                     Duration="0:0:0.24" />
-                    <DoubleAnimation Storyboard.TargetName="ShellTranslate"
-                                     Storyboard.TargetProperty="Y"
-                                     From="12"
-                                     To="0"
-                                     Duration="0:0:0.24">
-                        <DoubleAnimation.EasingFunction>
-                            <CubicEase EasingMode="EaseOut" />
-                        </DoubleAnimation.EasingFunction>
-                    </DoubleAnimation>
-                </Storyboard>
-            </BeginStoryboard>
-        </EventTrigger>
-    </Window.Triggers>
-
     <Border x:Name="RootFrame"
-            Background="#F7F8F4"
-            BorderBrush="#DDE6DF"
+            Background="{DynamicResource AppBackgroundBrush}"
+            BorderBrush="{DynamicResource BorderBrushSoft}"
             BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>
@@ -407,29 +451,20 @@
 
             <Grid x:Name="TitleBar"
                   Grid.Row="0"
-                  Background="#FBFCF8"
+                  Background="{DynamicResource TopBarBrush}"
                   MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Orientation="Horizontal"
-                            Margin="22,0,0,0"
-                            VerticalAlignment="Center">
-                    <Border Width="30"
-                            Height="30"
-                            CornerRadius="8"
-                            Background="#111827">
-                        <TextBlock Text="К"
-                                   Foreground="White"
-                                   FontSize="15"
-                                   FontWeight="Bold"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center" />
+                <StackPanel Orientation="Horizontal" Margin="22,0,0,0" VerticalAlignment="Center">
+                    <Border Width="30" Height="30" CornerRadius="8" Background="{DynamicResource AccentBrush}">
+                        <TextBlock Text="К" Foreground="White" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
-                    <TextBlock Text="Книга рецептов"
-                               Foreground="#20352D"
+                    <TextBlock x:Name="TitleBarAppNameText"
+                               Text="Книга рецептов"
+                               Foreground="{DynamicResource TextBrush}"
                                FontSize="15"
                                FontWeight="SemiBold"
                                VerticalAlignment="Center"
@@ -441,495 +476,323 @@
                             Margin="0,0,10,0"
                             VerticalAlignment="Center"
                             shell:WindowChrome.IsHitTestVisibleInChrome="True">
-                    <Button x:Name="ThemeToggleButton"
-                            Style="{StaticResource TitleBarButtonStyle}"
-                            Content="☾"
-                            ToolTip="Переключить тему"
-                            Click="ThemeToggleButton_Click" />
-                    <Button Style="{StaticResource TitleBarButtonStyle}"
-                            Content="−"
-                            Click="MinimizeButton_Click" />
-                    <Button Style="{StaticResource TitleBarButtonStyle}"
-                            Content="□"
-                            Click="MaximizeButton_Click" />
-                    <Button Style="{StaticResource CloseButtonStyle}"
-                            Content="×"
-                            Click="CloseButton_Click" />
+                    <Button x:Name="LanguageToggleButton" Style="{StaticResource ChromeButtonStyle}" Content="EN" ToolTip="Switch to English" AutomationProperties.Name="Переключить язык" Click="LanguageToggleButton_Click" />
+                    <Button x:Name="ThemeToggleButton" Style="{StaticResource ChromeButtonStyle}" Content="☾" ToolTip="Включить темную тему" AutomationProperties.Name="Переключить тему" Click="ThemeToggleButton_Click" />
+                    <Button Style="{StaticResource ChromeButtonStyle}" Content="−" Click="MinimizeButton_Click" />
+                    <Button Style="{StaticResource CloseButtonStyle}" Content="×" Click="CloseButton_Click" />
                 </StackPanel>
             </Grid>
 
-            <Grid x:Name="MainArea"
-                  Grid.Row="1">
-                <Grid.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                        <GradientStop Color="#F7F8F4" Offset="0" />
-                        <GradientStop Color="#F1F3F6" Offset="0.56" />
-                        <GradientStop Color="#FBF3EA" Offset="1" />
-                    </LinearGradientBrush>
-                </Grid.Background>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="276" />
+                    <ColumnDefinition Width="22" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-                <Grid x:Name="Shell"
-                      Margin="24"
-                      Opacity="0">
-                    <Grid.RenderTransform>
-                        <TranslateTransform x:Name="ShellTranslate" />
-                    </Grid.RenderTransform>
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="238" />
-                        <ColumnDefinition Width="24" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-                    <Border Grid.Column="0"
-                            Background="#FFFFFF"
-                            CornerRadius="8"
-                            Padding="20"
-                            Effect="{StaticResource SoftShadow}">
-                        <DockPanel LastChildFill="True">
-                            <StackPanel DockPanel.Dock="Top">
-                                <Grid Margin="0,0,0,28">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="44" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <Border Width="44"
-                                            Height="44"
-                                            CornerRadius="8"
-                                            Background="#111827">
-                                        <TextBlock Text="К"
-                                                   Foreground="White"
-                                                   FontSize="21"
-                                                   FontWeight="Bold"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center" />
-                                    </Border>
-
-                                    <StackPanel Grid.Column="1"
-                                                Margin="12,0,0,0"
-                                                VerticalAlignment="Center">
-                                        <TextBlock Text="Книга рецептов"
-                                                   Foreground="#1F2F2A"
-                                                   FontSize="17"
-                                                   FontWeight="SemiBold" />
-                                        <TextBlock Text="Домашняя коллекция"
-                                                   Foreground="#77847E"
-                                                   FontSize="12" />
-                                    </StackPanel>
-                                </Grid>
-
-                                <Button Style="{StaticResource NavButtonStyle}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="32" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Border Width="24" Height="24" CornerRadius="7" Background="#EAF0FF">
-                                            <TextBlock Text="⌂" Foreground="#2563EB" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                        </Border>
-                                        <TextBlock Grid.Column="1" Text="Все рецепты" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" />
-                                    </Grid>
-                                </Button>
-                                <Button Style="{StaticResource NavButtonStyle}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="32" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Border Width="24" Height="24" CornerRadius="7" Background="#F7EFE4">
-                                            <TextBlock Text="★" Foreground="#9A6B2C" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                        </Border>
-                                        <TextBlock Grid.Column="1" Text="Избранное" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" />
-                                    </Grid>
-                                </Button>
-                                <Button Style="{StaticResource NavButtonStyle}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="32" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Border Width="24" Height="24" CornerRadius="7" Background="#F0EDF8">
-                                            <TextBlock Text="≡" Foreground="#6A5191" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                        </Border>
-                                        <TextBlock Grid.Column="1" Text="Категории" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" />
-                                    </Grid>
-                                </Button>
-                                <Button Style="{StaticResource NavButtonStyle}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="32" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Border Width="24" Height="24" CornerRadius="7" Background="#EBF2F8">
-                                            <TextBlock Text="✓" Foreground="#3E6680" FontSize="13" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                        </Border>
-                                        <TextBlock Grid.Column="1" Text="Покупки" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" />
-                                    </Grid>
-                                </Button>
-                            </StackPanel>
-
-                            <Border DockPanel.Dock="Bottom"
-                                    Background="#F2F4F7"
-                                    CornerRadius="8"
-                                    Padding="14">
-                                <StackPanel>
-                                    <TextBlock Text="Коллекция"
-                                               Foreground="#728079"
-                                               FontSize="12" />
-                                    <TextBlock Text="12 рецептов"
-                                               Foreground="#1F2F2A"
-                                               FontSize="20"
-                                               FontWeight="SemiBold"
-                                               Margin="0,4,0,0" />
-                                    <TextBlock Text="4 любимых блюда"
-                                               Foreground="#6A7771"
-                                               FontSize="12"
-                                               Margin="0,2,0,0" />
-                                </StackPanel>
-                            </Border>
-                        </DockPanel>
-                    </Border>
-
-                    <Grid Grid.Column="2">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="20" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-
-                        <Grid Grid.Row="0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-
-                            <StackPanel VerticalAlignment="Center">
-                                <TextBlock Text="Мои рецепты"
-                                           Foreground="#1F2F2A"
-                                           FontSize="32"
-                                           FontWeight="SemiBold" />
-                                <TextBlock Text="Сохраняйте блюда, заметки, ингредиенты и идеи в одном месте."
-                                           Foreground="#66756E"
-                                           FontSize="15"
-                                           Margin="0,6,0,0" />
-                            </StackPanel>
-
-                            <StackPanel Grid.Column="1"
-                                        Orientation="Horizontal"
-                                        VerticalAlignment="Center">
-                                <Button Style="{StaticResource IconButtonStyle}"
-                                        Content="⌕"
-                                        Margin="0,0,10,0"
-                                        ToolTip="Перейти к поиску"
-                                        Click="SearchButton_Click" />
-                                <Button Style="{StaticResource PrimaryButtonStyle}">
-                                    <StackPanel Orientation="Horizontal"
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center">
-                                        <Border Width="18"
-                                                Height="18"
-                                                CornerRadius="6"
-                                                Background="#2563EB"
-                                                Margin="0,0,9,0">
-                                            <Grid>
-                                                <Rectangle Width="10"
-                                                           Height="2"
-                                                           RadiusX="1"
-                                                           RadiusY="1"
-                                                           Fill="White"
-                                                           HorizontalAlignment="Center"
-                                                           VerticalAlignment="Center" />
-                                                <Rectangle Width="2"
-                                                           Height="10"
-                                                           RadiusX="1"
-                                                           RadiusY="1"
-                                                           Fill="White"
-                                                           HorizontalAlignment="Center"
-                                                           VerticalAlignment="Center" />
-                                            </Grid>
-                                        </Border>
-                                        <TextBlock Text="Новый рецепт"
-                                                   VerticalAlignment="Center"
-                                                   LineHeight="18" />
-                                    </StackPanel>
-                                </Button>
-                            </StackPanel>
-                        </Grid>
-
-                        <Grid Grid.Row="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="24" />
-                                <ColumnDefinition Width="330" />
-                            </Grid.ColumnDefinitions>
-
-                            <Grid Grid.Column="0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="16" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-
-                                <Border Grid.Row="0"
-                                        Background="White"
-                                        CornerRadius="8"
-                                        Padding="14"
-                                        Effect="{StaticResource SoftShadow}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="12" />
-                                            <ColumnDefinition Width="162" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <Border Height="42"
-                                                Background="#F3F6F4"
-                                                CornerRadius="8"
-                                                Padding="13,0">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="28" />
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Text="⌕"
-                                                           Foreground="#66776F"
-                                                           FontSize="17"
-                                                           VerticalAlignment="Center" />
-                                                <Grid Grid.Column="1">
-                                                    <TextBox x:Name="SearchTextBox"
-                                                             Foreground="#111827"
-                                                             Background="Transparent"
-                                                             BorderThickness="0"
-                                                             FontSize="14"
-                                                             VerticalContentAlignment="Center" />
-                                                    <TextBlock Text="Поиск по названию или ингредиенту"
-                                                               Foreground="#6C7B74"
-                                                               FontSize="14"
-                                                               IsHitTestVisible="False"
-                                                               VerticalAlignment="Center">
-                                                        <TextBlock.Style>
-                                                            <Style TargetType="TextBlock">
-                                                                <Setter Property="Visibility" Value="Collapsed" />
-                                                                <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding Text, ElementName=SearchTextBox}" Value="">
-                                                                        <Setter Property="Visibility" Value="Visible" />
-                                                                    </DataTrigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </TextBlock.Style>
-                                                    </TextBlock>
-                                                </Grid>
-                                            </Grid>
-                                        </Border>
-
-                                        <ComboBox Grid.Column="2"
-                                                  Style="{StaticResource CategoryComboBoxStyle}"
-                                                  SelectedIndex="0"
-                                                  VerticalAlignment="Center">
-                                            <ComboBoxItem Content="Все категории" />
-                                            <ComboBoxItem Content="Завтраки" />
-                                            <ComboBoxItem Content="Ужины" />
-                                            <ComboBoxItem Content="Выпечка" />
-                                        </ComboBox>
-                                    </Grid>
+                <Border Grid.Column="0"
+                        Background="{DynamicResource PanelBrush}"
+                        CornerRadius="8"
+                        Padding="20"
+                        Margin="24,24,0,24"
+                        Effect="{StaticResource SoftShadow}">
+                    <DockPanel LastChildFill="True">
+                        <StackPanel DockPanel.Dock="Top">
+                            <Grid Margin="0,0,0,26">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="38" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Border Width="38" Height="38" CornerRadius="8" Background="{DynamicResource AccentBrush}">
+                                    <TextBlock Text="К" Foreground="White" FontSize="19" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                 </Border>
-
-                                <ScrollViewer Grid.Row="2"
-                                              VerticalScrollBarVisibility="Auto"
-                                              Padding="0,0,10,0">
-                                    <StackPanel>
-                                        <Border Style="{StaticResource RecipeCardStyle}">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="74" />
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                </Grid.ColumnDefinitions>
-
-                                                <Border Width="58" Height="58" CornerRadius="8" Background="#F3D8C6">
-                                                    <Grid>
-                                                        <Ellipse Width="34" Height="34" Fill="#E65F3C" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                        <Ellipse Width="14" Height="14" Fill="#F8E7B4" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,12,13,0" />
-                                                    </Grid>
-                                                </Border>
-
-                                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                                    <TextBlock Text="Паста с томатами и базиликом"
-                                                               Foreground="#1F2F2A"
-                                                               FontSize="16"
-                                                               FontWeight="SemiBold" />
-                                                    <TextBlock Text="25 минут · ужин · 7 ингредиентов"
-                                                               Foreground="#728079"
-                                                               FontSize="13"
-                                                               Margin="0,5,0,0" />
-                                                </StackPanel>
-
-                                                <Border Grid.Column="2"
-                                                        Background="#EDF4EE"
-                                                        CornerRadius="8"
-                                                        Padding="12,7"
-                                                        VerticalAlignment="Center">
-                                                    <TextBlock Text="Италия"
-                                                               Foreground="#2F6F57"
-                                                               FontSize="12"
-                                                               FontWeight="SemiBold" />
-                                                </Border>
-                                            </Grid>
-                                        </Border>
-
-                                        <Border Style="{StaticResource RecipeCardStyle}">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="74" />
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                </Grid.ColumnDefinitions>
-
-                                                <Border Width="58" Height="58" CornerRadius="8" Background="#DCEADE">
-                                                    <Grid>
-                                                        <Ellipse Width="40" Height="28" Fill="#4E9B6E" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                        <Rectangle Width="24" Height="8" Fill="#FFE8B7" RadiusX="4" RadiusY="4" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,11" />
-                                                    </Grid>
-                                                </Border>
-
-                                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                                    <TextBlock Text="Куриный суп с зеленью"
-                                                               Foreground="#1F2F2A"
-                                                               FontSize="16"
-                                                               FontWeight="SemiBold" />
-                                                    <TextBlock Text="55 минут · обед · семейный рецепт"
-                                                               Foreground="#728079"
-                                                               FontSize="13"
-                                                               Margin="0,5,0,0" />
-                                                </StackPanel>
-
-                                                <Border Grid.Column="2"
-                                                        Background="#F4EEE5"
-                                                        CornerRadius="8"
-                                                        Padding="12,7"
-                                                        VerticalAlignment="Center">
-                                                    <TextBlock Text="Домашнее"
-                                                               Foreground="#9A5A2B"
-                                                               FontSize="12"
-                                                               FontWeight="SemiBold" />
-                                                </Border>
-                                            </Grid>
-                                        </Border>
-
-                                        <Border Style="{StaticResource RecipeCardStyle}">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="74" />
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                </Grid.ColumnDefinitions>
-
-                                                <Border Width="58" Height="58" CornerRadius="8" Background="#E8E3F4">
-                                                    <Grid>
-                                                        <Ellipse Width="40" Height="40" Fill="#7955A6" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                        <Ellipse Width="11" Height="11" Fill="#F6F3FB" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="14,14,0,0" />
-                                                    </Grid>
-                                                </Border>
-
-                                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                                    <TextBlock Text="Черничный чизкейк"
-                                                               Foreground="#1F2F2A"
-                                                               FontSize="16"
-                                                               FontWeight="SemiBold" />
-                                                    <TextBlock Text="1 час 20 минут · десерт · заметки из интернета"
-                                                               Foreground="#728079"
-                                                               FontSize="13"
-                                                               Margin="0,5,0,0" />
-                                                </StackPanel>
-
-                                                <Border Grid.Column="2"
-                                                        Background="#F0ECF7"
-                                                        CornerRadius="8"
-                                                        Padding="12,7"
-                                                        VerticalAlignment="Center">
-                                                    <TextBlock Text="Выпечка"
-                                                               Foreground="#6B4C9A"
-                                                               FontSize="12"
-                                                               FontWeight="SemiBold" />
-                                                </Border>
-                                            </Grid>
-                                        </Border>
-                                    </StackPanel>
-                                </ScrollViewer>
+                                <StackPanel Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock x:Name="SidebarTitleText" Text="Книга рецептов" Foreground="{DynamicResource TextBrush}" FontSize="15" FontWeight="SemiBold" />
+                                    <TextBlock x:Name="SidebarSubtitleText" Text="Коллекция рецептов" Foreground="{DynamicResource MutedTextBrush}" FontSize="12" />
+                                </StackPanel>
                             </Grid>
 
-                            <StackPanel Grid.Column="2">
-                                <Border Background="#111827"
-                                        CornerRadius="8"
-                                        Padding="22"
-                                        Effect="{StaticResource SoftShadow}">
-                                    <Grid Height="228">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*" />
-                                            <RowDefinition Height="Auto" />
-                                        </Grid.RowDefinitions>
+                            <Button x:Name="AllRecipesButton" Style="{StaticResource NavButtonStyle}" Click="ShowAllRecipes_Click">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="32" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Border Width="24" Height="24" CornerRadius="6" Background="{DynamicResource IconSurfaceBrush}" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                        <TextBlock Text="⌂" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                    <TextBlock x:Name="AllRecipesNavText" Grid.Column="1" Text="Все рецепты" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" />
+                                </Grid>
+                            </Button>
+                            <Button x:Name="FavoritesButton" Style="{StaticResource NavButtonStyle}" Click="ShowFavorites_Click">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="32" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Border Width="24" Height="24" CornerRadius="6" Background="{DynamicResource IconSurfaceBrush}" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                        <TextBlock Text="★" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                    <TextBlock x:Name="FavoritesNavText" Grid.Column="1" Text="Избранное" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" />
+                                </Grid>
+                            </Button>
+                            <Button x:Name="CategoriesButton" Style="{StaticResource NavButtonStyle}" Click="ShowCategories_Click">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="32" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Border Width="24" Height="24" CornerRadius="6" Background="{DynamicResource IconSurfaceBrush}" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                        <TextBlock Text="≡" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                    <TextBlock x:Name="CategoriesNavText" Grid.Column="1" Text="Категории" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" />
+                                </Grid>
+                            </Button>
+                        </StackPanel>
 
-                                        <Canvas HorizontalAlignment="Center"
-                                                VerticalAlignment="Top"
-                                                Width="246"
-                                                Height="150">
-                                            <Ellipse Width="148" Height="148" Canvas.Left="49" Canvas.Top="0" Fill="#334155" />
-                                            <Rectangle Width="116" Height="80" Canvas.Left="65" Canvas.Top="40" RadiusX="8" RadiusY="8" Fill="#FFF7E8" />
-                                            <Rectangle Width="82" Height="10" Canvas.Left="82" Canvas.Top="60" RadiusX="5" RadiusY="5" Fill="#D8B47B" />
-                                            <Rectangle Width="70" Height="8" Canvas.Left="82" Canvas.Top="80" RadiusX="4" RadiusY="4" Fill="#8AA5D8" />
-                                            <Rectangle Width="52" Height="8" Canvas.Left="82" Canvas.Top="99" RadiusX="4" RadiusY="4" Fill="#DD8061" />
-                                            <Path Data="M34,128 C48,104 82,94 110,112 C132,126 158,126 181,110 C197,100 216,105 226,126 L226,140 L34,140 Z" Fill="#E7B768" />
-                                            <Ellipse Width="34" Height="18" Canvas.Left="174" Canvas.Top="96" Fill="#F7E2A1" />
-                                            <Path Data="M189,97 C187,83 195,73 207,65" Stroke="#9CB7EA" StrokeThickness="5" StrokeStartLineCap="Round" StrokeEndLineCap="Round" />
-                                            <Path Data="M202,69 C216,63 228,69 231,82" Stroke="#9CB7EA" StrokeThickness="5" StrokeStartLineCap="Round" StrokeEndLineCap="Round" />
-                                        </Canvas>
-
-                                        <StackPanel Grid.Row="1">
-                                            <TextBlock Text="Идея дня"
-                                                       Foreground="#C9D8CF"
-                                                       FontSize="13" />
-                                            <TextBlock Text="Добавьте рецепт, который давно лежит в закладках."
-                                                       Foreground="White"
-                                                       FontSize="20"
-                                                       FontWeight="SemiBold"
-                                                       TextWrapping="Wrap"
-                                                       Margin="0,6,0,0" />
-                                        </StackPanel>
-                                    </Grid>
-                                </Border>
-
-                                <Border Background="White"
-                                        CornerRadius="8"
-                                        Padding="18"
-                                        Margin="0,16,0,0"
-                                        Effect="{StaticResource SoftShadow}">
-                                    <StackPanel>
-                                        <TextBlock Text="Быстрые категории"
-                                                   Foreground="#1F2F2A"
-                                                   FontSize="17"
-                                                   FontWeight="SemiBold" />
-
-                                        <UniformGrid Columns="2" Margin="0,14,0,0">
-                                            <Border Background="#F3F6F4" CornerRadius="8" Padding="12" Margin="0,0,7,7">
-                                                <TextBlock Text="Завтраки" Foreground="#40524A" FontWeight="SemiBold" />
-                                            </Border>
-                                            <Border Background="#F7F1EA" CornerRadius="8" Padding="12" Margin="7,0,0,7">
-                                                <TextBlock Text="Ужины" Foreground="#7A5836" FontWeight="SemiBold" />
-                                            </Border>
-                                            <Border Background="#F2EEF7" CornerRadius="8" Padding="12" Margin="0,7,7,0">
-                                                <TextBlock Text="Десерты" Foreground="#684C8F" FontWeight="SemiBold" />
-                                            </Border>
-                                            <Border Background="#EEF3F8" CornerRadius="8" Padding="12" Margin="7,7,0,0">
-                                                <TextBlock Text="Напитки" Foreground="#365B73" FontWeight="SemiBold" />
-                                            </Border>
-                                        </UniformGrid>
-                                    </StackPanel>
-                                </Border>
+                        <Border DockPanel.Dock="Bottom" Background="{DynamicResource InputBrush}" CornerRadius="8" Padding="14">
+                            <StackPanel>
+                                <TextBlock x:Name="CollectionLabelText" Text="Коллекция" Foreground="{DynamicResource MutedTextBrush}" FontSize="12" />
+                                <TextBlock x:Name="RecipeCountText" Text="0 рецептов" Foreground="{DynamicResource TextBrush}" FontSize="20" FontWeight="SemiBold" Margin="0,4,0,0" />
+                                <TextBlock x:Name="FavoriteCountText" Text="0 любимых блюд" Foreground="{DynamicResource MutedTextBrush}" FontSize="12" Margin="0,2,0,0" />
                             </StackPanel>
+                        </Border>
+                    </DockPanel>
+                </Border>
+
+                <Grid Grid.Column="2" Margin="0,24,24,24">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="20" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock x:Name="HeaderTitle" Text="Мои рецепты" Foreground="{DynamicResource TextBrush}" FontSize="32" FontWeight="SemiBold" />
+                            <TextBlock x:Name="HeaderSubtitle" Text="Сохраняйте блюда, ингредиенты и пошаговые заметки в одном месте." Foreground="{DynamicResource MutedTextBrush}" FontSize="15" Margin="0,6,0,0" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                            <Button x:Name="SearchShortcutButton" Style="{StaticResource IconButtonStyle}" Content="⌕" Margin="0,0,10,0" ToolTip="Перейти к поиску" AutomationProperties.Name="Поиск" Click="SearchButton_Click" />
+                            <Button x:Name="NewRecipeButton" Style="{StaticResource PrimaryButtonStyle}" AutomationProperties.Name="Новый рецепт" Click="NewRecipeButton_Click">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock Text="+" FontSize="18" FontWeight="SemiBold" Margin="0,-1,8,0" />
+                                    <TextBlock x:Name="NewRecipeButtonText" Text="Новый рецепт" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="24" />
+                            <ColumnDefinition Width="330" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="16" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <Border Grid.Row="0" Background="{DynamicResource CardBrush}" CornerRadius="8" Padding="14" Effect="{StaticResource SoftShadow}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="12" />
+                                        <ColumnDefinition Width="180" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid>
+                                        <TextBox x:Name="SearchTextBox"
+                                                 Style="{StaticResource InputTextBoxStyle}"
+                                                 TextChanged="SearchTextBox_TextChanged"
+                                                 ToolTip="Поиск по названию, категории, ингредиентам и шагам" />
+                                        <TextBlock x:Name="SearchPlaceholderText"
+                                                   Text="Поиск по названию или ингредиенту"
+                                                   Foreground="{DynamicResource MutedTextBrush}"
+                                                   FontSize="14"
+                                                   Margin="13,0,0,0"
+                                                   VerticalAlignment="Center"
+                                                   IsHitTestVisible="False">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                    <Style.Triggers>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding Text, ElementName=SearchTextBox}" Value="" />
+                                                                <Condition Binding="{Binding IsKeyboardFocused, ElementName=SearchTextBox}" Value="False" />
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Grid>
+                                    <ComboBox x:Name="CategoryFilterComboBox"
+                                              Grid.Column="2"
+                                              Style="{StaticResource InputComboBoxStyle}"
+                                              SelectionChanged="CategoryFilterComboBox_SelectionChanged" />
+                                </Grid>
+                            </Border>
+
+                            <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Padding="0,0,10,0">
+                                <StackPanel x:Name="RecipeListPanel" />
+                            </ScrollViewer>
                         </Grid>
+
+                        <ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Auto">
+                            <StackPanel x:Name="RightPanel" />
+                        </ScrollViewer>
                     </Grid>
                 </Grid>
+            </Grid>
+
+            <Grid x:Name="EditorOverlay"
+                  Grid.RowSpan="2"
+                  Background="#99000000"
+                  Visibility="Collapsed">
+                <Border Width="720"
+                        MaxHeight="690"
+                        Background="{DynamicResource PanelBrush}"
+                        CornerRadius="8"
+                        Padding="24,24,14,24"
+                        Effect="{StaticResource SoftShadow}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                  Padding="0,0,6,0">
+                        <StackPanel Margin="0,0,10,0">
+                            <TextBlock x:Name="EditorTitleText" Text="Новый рецепт" Foreground="{DynamicResource TextBrush}" FontSize="26" FontWeight="SemiBold" />
+                            <TextBlock x:Name="EditorSubtitleText" Text="Добавьте название, категорию, ингредиенты и пошаговый процесс." Foreground="{DynamicResource MutedTextBrush}" FontSize="14" Margin="0,6,0,18" />
+
+                            <TextBlock x:Name="RecipeTitleLabelText" Text="Название" Foreground="{DynamicResource TextBrush}" FontWeight="SemiBold" />
+                            <TextBox x:Name="RecipeTitleTextBox" Style="{StaticResource InputTextBoxStyle}" Margin="0,6,0,14" />
+
+                            <Grid Margin="0,0,0,14">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="12" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock x:Name="RecipeCategoryLabelText" Text="Категория" Foreground="{DynamicResource TextBrush}" FontWeight="SemiBold" />
+                                    <ComboBox x:Name="RecipeCategoryComboBox"
+                                              Style="{StaticResource InputComboBoxStyle}"
+                                              Margin="0,6,0,0" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock x:Name="NewCategoryLabelText" Text="Новая категория" Foreground="{DynamicResource TextBrush}" FontWeight="SemiBold" />
+                                    <TextBox x:Name="NewCategoryTextBox"
+                                             Style="{StaticResource InputTextBoxStyle}"
+                                             Margin="0,6,0,0"
+                                             ToolTip="Заполните, если нужной категории нет в списке" />
+                                </StackPanel>
+                            </Grid>
+
+                            <CheckBox x:Name="FavoriteRecipeCheckBox"
+                                      Content="Добавить в избранное"
+                                      Style="{StaticResource ModernCheckBoxStyle}"
+                                      Margin="0,0,0,18" />
+
+                            <Grid Margin="0,0,0,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock x:Name="IngredientsLabelText" Text="Ингредиенты" Foreground="{DynamicResource TextBrush}" FontWeight="SemiBold" VerticalAlignment="Center" />
+                                <Button x:Name="AddIngredientButton" Grid.Column="1" Style="{StaticResource SecondaryButtonStyle}" Content="+ ингредиент" Click="AddIngredientButton_Click" />
+                            </Grid>
+                            <StackPanel x:Name="IngredientsPanel" Margin="0,0,0,18" />
+
+                            <Grid Margin="0,0,0,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock x:Name="StepsLabelText" Text="Шаги приготовления" Foreground="{DynamicResource TextBrush}" FontWeight="SemiBold" VerticalAlignment="Center" />
+                                <Button x:Name="AddStepButton" Grid.Column="1" Style="{StaticResource SecondaryButtonStyle}" Content="+ шаг" Click="AddStepButton_Click" />
+                            </Grid>
+                            <StackPanel x:Name="StepsPanel" Margin="0,0,0,22" />
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button x:Name="CancelEditorButton" Style="{StaticResource SecondaryButtonStyle}" Content="Отмена" Margin="0,0,10,0" Click="CancelEditorButton_Click" />
+                                <Button x:Name="SaveRecipeButton" Style="{StaticResource PrimaryButtonStyle}" Content="Сохранить рецепт" Click="SaveRecipeButton_Click" />
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
+
+            <Grid x:Name="DialogOverlay"
+                  Grid.RowSpan="2"
+                  Background="#99000000"
+                  Visibility="Collapsed">
+                <Border Width="430"
+                        Background="{DynamicResource PanelBrush}"
+                        CornerRadius="8"
+                        Padding="22"
+                        Effect="{StaticResource SoftShadow}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,18">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="48" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="DialogIconBadge"
+                                    Width="38"
+                                    Height="38"
+                                    CornerRadius="8"
+                                    Background="{DynamicResource InputBrush}"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top">
+                                <TextBlock x:Name="DialogIconText"
+                                           Text="!"
+                                           Foreground="{DynamicResource BlueAccentBrush}"
+                                           FontSize="20"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" />
+                            </Border>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock x:Name="DialogTitleText"
+                                           Text="Предупреждение"
+                                           Foreground="{DynamicResource TextBrush}"
+                                           FontSize="18"
+                                           FontWeight="SemiBold"
+                                           TextWrapping="Wrap" />
+                                <TextBlock x:Name="DialogMessageText"
+                                           Text="Сообщение"
+                                           Foreground="{DynamicResource MutedTextBrush}"
+                                           FontSize="14"
+                                           LineHeight="20"
+                                           TextWrapping="Wrap"
+                                           Margin="0,8,0,0" />
+                            </StackPanel>
+                        </Grid>
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button x:Name="DialogSecondaryButton"
+                                    Style="{StaticResource SecondaryButtonStyle}"
+                                    Content="Нет"
+                                    Margin="0,0,10,0"
+                                    Click="DialogSecondaryButton_Click" />
+                            <Button x:Name="DialogPrimaryButton"
+                                    Style="{StaticResource PrimaryButtonStyle}"
+                                    Content="Да"
+                                    Click="DialogPrimaryButton_Click" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
             </Grid>
         </Grid>
     </Border>
