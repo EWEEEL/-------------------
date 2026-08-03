@@ -65,6 +65,11 @@ public sealed class MainWindowXamlTests
         StringAssert.Contains(text, "DeleteRecipe");
         StringAssert.Contains(text, "DeleteRecipeConfirmation");
         StringAssert.Contains(text, "ShowAppDialogAsync");
+        StringAssert.Contains(text, "LegacyStarterRecipes");
+        StringAssert.Contains(text, "IsLegacyStarterRecipe");
+        StringAssert.DoesNotMatch(text, new Regex("CreateStarterRecipes"));
+        StringAssert.DoesNotMatch(text, new Regex("Паста с томатами"));
+        StringAssert.DoesNotMatch(text, new Regex("Черничный чизкейк"));
         StringAssert.DoesNotMatch(text, new Regex("MessageBox\\.Show"));
         StringAssert.DoesNotMatch(text, new Regex("AppView.Shopping"));
     }

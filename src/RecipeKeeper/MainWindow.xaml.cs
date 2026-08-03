@@ -78,6 +78,12 @@ public partial class MainWindow : Window
     };
 
     private static readonly string[] AllCategoryLabels = ["Все категории", "All categories"];
+    private static readonly (string Title, string Category)[] LegacyStarterRecipes =
+    [
+        ("\u041F\u0430\u0441\u0442\u0430 \u0441 \u0442\u043E\u043C\u0430\u0442\u0430\u043C\u0438 \u0438 \u0431\u0430\u0437\u0438\u043B\u0438\u043A\u043E\u043C", "\u0418\u0442\u0430\u043B\u0438\u044F"),
+        ("\u041A\u0443\u0440\u0438\u043D\u044B\u0439 \u0441\u0443\u043F \u0441 \u0437\u0435\u043B\u0435\u043D\u044C\u044E", "\u0414\u043E\u043C\u0430\u0448\u043D\u0435\u0435"),
+        ("\u0427\u0435\u0440\u043D\u0438\u0447\u043D\u044B\u0439 \u0447\u0438\u0437\u043A\u0435\u0439\u043A", "\u0412\u044B\u043F\u0435\u0447\u043A\u0430")
+    ];
 
     private readonly string _dataFilePath = System.IO.Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
@@ -258,22 +264,30 @@ public partial class MainWindow : Window
         {
             if (File.Exists(_dataFilePath))
             {
-                var recipes = JsonSerializer.Deserialize<List<Recipe>>(File.ReadAllText(_dataFilePath));
-                if (recipes is { Count: > 0 })
+                var savedRecipes = JsonSerializer.Deserialize<List<Recipe>>(File.ReadAllText(_dataFilePath)) ?? [];
+                var recipes = savedRecipes
+                    .Where(recipe => !IsLegacyStarterRecipe(recipe))
+                    .ToList();
+
+                _recipes.AddRange(recipes);
+                _selectedRecipe = _recipes.FirstOrDefault();
+
+                if (recipes.Count != savedRecipes.Count)
                 {
-                    _recipes.AddRange(recipes);
-                    _selectedRecipe = _recipes[0];
-                    return;
+                    SaveRecipes();
                 }
+
+                return;
             }
         }
         catch
         {
-            // If the local file is malformed, keep the app usable with starter data.
+            // If the local file is malformed, keep the app open and let the next save replace it.
+            _selectedRecipe = null;
+            return;
         }
 
-        _recipes.AddRange(CreateStarterRecipes());
-        _selectedRecipe = _recipes[0];
+        _selectedRecipe = null;
         SaveRecipes();
     }
 
@@ -1044,72 +1058,11 @@ public partial class MainWindow : Window
         return value is not null && AllCategoryLabels.Contains(value);
     }
 
-    private static List<Recipe> CreateStarterRecipes()
+    private static bool IsLegacyStarterRecipe(Recipe recipe)
     {
-        return
-        [
-            new Recipe
-            {
-                Id = Guid.NewGuid(),
-                Title = "Паста с томатами и базиликом",
-                Category = "Италия",
-                IsFavorite = true,
-                CreatedAt = DateTimeOffset.Now,
-                Ingredients =
-                [
-                    new Ingredient { Name = "Паста", Quantity = 250, Unit = "г" },
-                    new Ingredient { Name = "Томаты", Quantity = 300, Unit = "г" },
-                    new Ingredient { Name = "Оливковое масло", Quantity = 30, Unit = "мл" },
-                    new Ingredient { Name = "Базилик", Quantity = 10, Unit = "г" }
-                ],
-                Steps =
-                [
-                    new RecipeStep { Text = "Отварить пасту до состояния al dente.", DurationMinutes = 9 },
-                    new RecipeStep { Text = "Прогреть томаты с маслом и базиликом.", DurationMinutes = 7 },
-                    new RecipeStep { Text = "Смешать пасту с соусом и дать постоять.", DurationMinutes = 2 }
-                ]
-            },
-            new Recipe
-            {
-                Id = Guid.NewGuid(),
-                Title = "Куриный суп с зеленью",
-                Category = "Домашнее",
-                CreatedAt = DateTimeOffset.Now,
-                Ingredients =
-                [
-                    new Ingredient { Name = "Курица", Quantity = 500, Unit = "г" },
-                    new Ingredient { Name = "Картофель", Quantity = 300, Unit = "г" },
-                    new Ingredient { Name = "Морковь", Quantity = 1, Unit = "шт" },
-                    new Ingredient { Name = "Зелень", Quantity = 20, Unit = "г" }
-                ],
-                Steps =
-                [
-                    new RecipeStep { Text = "Сварить куриный бульон.", DurationMinutes = 35 },
-                    new RecipeStep { Text = "Добавить овощи и варить до мягкости.", DurationMinutes = 15 },
-                    new RecipeStep { Text = "Добавить зелень и оставить под крышкой.", DurationMinutes = 5 }
-                ]
-            },
-            new Recipe
-            {
-                Id = Guid.NewGuid(),
-                Title = "Черничный чизкейк",
-                Category = "Выпечка",
-                IsFavorite = true,
-                CreatedAt = DateTimeOffset.Now,
-                Ingredients =
-                [
-                    new Ingredient { Name = "Сливочный сыр", Quantity = 450, Unit = "г" },
-                    new Ingredient { Name = "Печенье", Quantity = 180, Unit = "г" },
-                    new Ingredient { Name = "Черника", Quantity = 200, Unit = "г" }
-                ],
-                Steps =
-                [
-                    new RecipeStep { Text = "Сформировать основу из печенья.", DurationMinutes = 10 },
-                    new RecipeStep { Text = "Смешать сырную массу и выложить на основу.", DurationMinutes = 15 },
-                    new RecipeStep { Text = "Охладить чизкейк перед подачей.", DurationMinutes = 60 }
-                ]
-            }
-        ];
+        return LegacyStarterRecipes.Any(starterRecipe =>
+            string.Equals(recipe.Title, starterRecipe.Title, StringComparison.OrdinalIgnoreCase) &&
+            string.Equals(recipe.Category, starterRecipe.Category, StringComparison.OrdinalIgnoreCase));
     }
 
     private static string FormatQuantity(double value)
