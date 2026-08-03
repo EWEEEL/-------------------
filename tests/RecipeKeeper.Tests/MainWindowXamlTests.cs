@@ -56,8 +56,12 @@ public sealed class MainWindowXamlTests
         var text = File.ReadAllText(GetMainWindowCodePath());
 
         StringAssert.Contains(text, "recipes.json");
+        StringAssert.Contains(text, "settings.json");
         StringAssert.Contains(text, "SaveRecipes");
         StringAssert.Contains(text, "LoadRecipes");
+        StringAssert.Contains(text, "SaveSettings");
+        StringAssert.Contains(text, "LoadSettings");
+        StringAssert.Contains(text, "AppSettings");
         StringAssert.Contains(text, "AppView.Favorites");
         StringAssert.Contains(text, "AppView.Categories");
         StringAssert.Contains(text, "LanguageToggleButton_Click");

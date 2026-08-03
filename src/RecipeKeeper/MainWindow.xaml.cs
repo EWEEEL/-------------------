@@ -89,6 +89,10 @@ public partial class MainWindow : Window
         Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
         "RecipeKeeper",
         "recipes.json");
+    private readonly string _settingsFilePath = System.IO.Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+        "RecipeKeeper",
+        "settings.json");
 
     private readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
     private readonly List<Recipe> _recipes = [];
@@ -103,6 +107,8 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        LoadSettings();
+        ApplyTheme(_isDarkTheme);
         LoadRecipes();
         ApplyLanguage();
     }
@@ -130,6 +136,7 @@ public partial class MainWindow : Window
     private void LanguageToggleButton_Click(object sender, RoutedEventArgs e)
     {
         _language = _language == UiLanguage.Ru ? UiLanguage.En : UiLanguage.Ru;
+        SaveSettings();
         ApplyLanguage();
     }
 
@@ -138,6 +145,7 @@ public partial class MainWindow : Window
         _isDarkTheme = !_isDarkTheme;
         ApplyTheme(_isDarkTheme);
         UpdateThemeButtonText();
+        SaveSettings();
         RenderCurrentView();
     }
 
@@ -295,6 +303,44 @@ public partial class MainWindow : Window
     {
         Directory.CreateDirectory(System.IO.Path.GetDirectoryName(_dataFilePath)!);
         File.WriteAllText(_dataFilePath, JsonSerializer.Serialize(_recipes, _jsonOptions));
+    }
+
+    private void LoadSettings()
+    {
+        try
+        {
+            if (!File.Exists(_settingsFilePath))
+            {
+                SaveSettings();
+                return;
+            }
+
+            var settings = JsonSerializer.Deserialize<AppSettings>(File.ReadAllText(_settingsFilePath));
+            if (settings is null)
+            {
+                SaveSettings();
+                return;
+            }
+
+            _isDarkTheme = settings.IsDarkTheme;
+            _language = settings.Language;
+        }
+        catch
+        {
+            _isDarkTheme = false;
+            _language = UiLanguage.Ru;
+        }
+    }
+
+    private void SaveSettings()
+    {
+        Directory.CreateDirectory(System.IO.Path.GetDirectoryName(_settingsFilePath)!);
+        var settings = new AppSettings
+        {
+            IsDarkTheme = _isDarkTheme,
+            Language = _language
+        };
+        File.WriteAllText(_settingsFilePath, JsonSerializer.Serialize(settings, _jsonOptions));
     }
 
     private void ApplyLanguage()
@@ -1109,6 +1155,12 @@ public partial class MainWindow : Window
     {
         Info,
         Warning
+    }
+
+    private sealed class AppSettings
+    {
+        public bool IsDarkTheme { get; set; }
+        public UiLanguage Language { get; set; } = UiLanguage.Ru;
     }
 
     private sealed class Recipe
